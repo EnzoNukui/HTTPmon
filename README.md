@@ -1,21 +1,42 @@
-# HTTPmon
+<h1 align="center">HTTPmon</h1>
+
+<hr />
 
 <p align="center">
-  <img src="src/assets/images/Logotipo_httpmon_transparente.png" alt="Logo do HTTPmon" width="300" />
+  Explore os códigos de status HTTP com exemplos práticos e cenas de Pokémon.
 </p>
 
 <p align="center">
-  <strong>Entenda os códigos de status HTTP com exemplos e cenas de Pokémon.</strong><br />
-  Um projeto educacional para explorar o que acontece quando um site responde a uma requisição.
+  <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white" alt="TypeScript 6" />
+  <img src="https://img.shields.io/badge/React_Router-8-CA4245?logo=reactrouter&logoColor=white" alt="React Router 8" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind CSS 4" />
+  <img src="https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white" alt="Vite 8" />
 </p>
 
 <p align="center">
-  <a href="#visao-geral">Visão geral</a> ·
-  <a href="#prévia-do-projeto">Prévia</a> ·
-  <a href="#rotas-e-navegação">Rotas</a> ·
-  <a href="#executar-localmente">Executar</a> ·
-  <a href="#estrutura-do-projeto">Estrutura</a>
+  <a href="#prévia-do-projeto">Ver prévia</a> ·
+  <a href="#executar-localmente">Executar localmente</a>
 </p>
+
+---
+
+## Prévia do projeto
+
+<table>
+  <tr>
+    <th align="center">Página inicial</th>
+    <th align="center">Página do status 404</th>
+  </tr>
+  <tr>
+    <td width="50%">
+      <img src="docs/images/home.png" alt="Home do HTTPmon com instrução de uso e cards de status HTTP da categoria 1xx" width="100%" />
+    </td>
+    <td width="50%">
+      <img src="docs/images/status-404.png" alt="Detalhe do status 404 Not Found com animação, explicação, significado e exemplo HTTP" width="100%" />
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -33,24 +54,6 @@ O projeto foi criado para apoiar o aprendizado de HTTP e praticar a construção
 - Links para status relacionados e navegação de volta à lista.
 - Animações de Pokémon com uma explicação da relação entre a cena e o status.
 - Interface adaptável a telas grandes e pequenas.
-
-## Prévia do projeto
-
-### Página inicial
-
-A home apresenta o formato de uso e organiza os cards em grupos de status. Cada card leva à página de detalhes do código selecionado.
-
-<p align="center">
-  <img src="docs/images/home.png" alt="Home do HTTPmon com instrução de uso e cards de status HTTP da categoria 1xx" width="100%" />
-</p>
-
-### Página de status
-
-O exemplo abaixo mostra a página `404 Not Found`: a mídia aparece ao lado da descrição, seguida pela explicação da cena e pelos painéis de significado e exemplo.
-
-<p align="center">
-  <img src="docs/images/status-404.png" alt="Detalhe do status 404 Not Found com animação, explicação, significado e exemplo HTTP" width="100%" />
-</p>
 
 ## Categorias de status
 
@@ -152,3 +155,12 @@ O catálogo inclui códigos HTTP e alguns códigos usados por serviços específ
 ## Créditos
 
 O HTTPmon é um projeto educacional independente. Pokémon e seus personagens são propriedade de seus respectivos titulares. As animações são disponibilizadas pelo Tenor e usadas como referência visual para explicar os status HTTP.
+
+## Autor
+
+Desenvolvido por **Enzo Nukui**.
+
+- GitHub: [@EnzoNukui](https://github.com/EnzoNukui)
+- LinkedIn: [linkedin.com/in/enzo-nukui](https://www.linkedin.com/in/enzo-nukui/)
+
+

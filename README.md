@@ -1,79 +1,154 @@
 # HTTPmon
 
 <p align="center">
-  <img src="src/assets/images/Logotipo_httpmon_transparente.png" alt="Logo do HTTPmon" width="280" />
+  <img src="src/assets/images/Logotipo_httpmon_transparente.png" alt="Logo do HTTPmon" width="300" />
 </p>
 
 <p align="center">
-  Códigos de status HTTP explicados com exemplos práticos e cenas de Pokémon.
+  <strong>Entenda os códigos de status HTTP com exemplos e cenas de Pokémon.</strong><br />
+  Um projeto educacional para explorar o que acontece quando um site responde a uma requisição.
 </p>
 
-O HTTPmon é um projeto educacional para explorar respostas HTTP. Os códigos são organizados por categoria, e cada página reúne uma explicação, um exemplo de requisição e resposta, causas comuns e uma mídia relacionada.
+<p align="center">
+  <a href="#visao-geral">Visão geral</a> ·
+  <a href="#prévia-do-projeto">Prévia</a> ·
+  <a href="#rotas-e-navegação">Rotas</a> ·
+  <a href="#executar-localmente">Executar</a> ·
+  <a href="#estrutura-do-projeto">Estrutura</a>
+</p>
 
-## Prévia
+---
+
+## Visão geral
+
+O HTTPmon transforma uma lista de códigos HTTP em uma experiência visual e navegável. Na página inicial, os status ficam agrupados por categoria. Ao selecionar um card, a aplicação abre uma página com o significado do código, um exemplo prático, causas comuns, status relacionados e uma animação que ajuda a memorizar a ideia.
+
+O projeto foi criado para apoiar o aprendizado de HTTP e praticar a construção de uma aplicação React organizada por rotas e dados. Os exemplos usam situações simples, como consultar um recurso que não existe e receber `404 Not Found`.
+
+### O que você encontra
+
+- Status agrupados em `1xx`, `2xx`, `3xx`, `4xx` e `5xx`.
+- Uma página de detalhes compartilhada entre os códigos, preenchida conforme a rota acessada.
+- Explicações em linguagem direta, exemplos de requisição e resposta e causas comuns.
+- Links para status relacionados e navegação de volta à lista.
+- Animações de Pokémon com uma explicação da relação entre a cena e o status.
+- Interface adaptável a telas grandes e pequenas.
+
+## Prévia do projeto
 
 ### Página inicial
 
-As categorias de status são organizadas em seções, com cards que levam aos detalhes de cada código.
+A home apresenta o formato de uso e organiza os cards em grupos de status. Cada card leva à página de detalhes do código selecionado.
 
 <p align="center">
-  <img src="docs/images/home.png" alt="Página inicial do HTTPmon com a área de uso e os cards da categoria 1xx" width="100%" />
+  <img src="docs/images/home.png" alt="Home do HTTPmon com instrução de uso e cards de status HTTP da categoria 1xx" width="100%" />
 </p>
 
-### Página de um status
+### Página de status
 
-Cada código usa o mesmo modelo de página e carrega as informações correspondentes ao status escolhido.
+O exemplo abaixo mostra a página `404 Not Found`: a mídia aparece ao lado da descrição, seguida pela explicação da cena e pelos painéis de significado e exemplo.
 
 <p align="center">
-  <img src="docs/images/status-404.png" alt="Página do status HTTP 404 Not Found, com mídia, significado e exemplo" width="100%" />
+  <img src="docs/images/status-404.png" alt="Detalhe do status 404 Not Found com animação, explicação, significado e exemplo HTTP" width="100%" />
 </p>
 
-## Funcionalidades
+## Categorias de status
 
-- Navegação pelos status organizados nas categorias `1xx`, `2xx`, `3xx`, `4xx` e `5xx`.
-- Página de detalhes reutilizável no formato `/status/:code`.
-- Exemplos práticos, causas comuns e links para status relacionados.
-- GIFs associados aos status e uma explicação da escolha de cada mídia.
-- Layout responsivo para telas grandes e celulares.
+| Faixa | Categoria | Em poucas palavras |
+| --- | --- | --- |
+| `1xx` | Informativo | A solicitação foi recebida e o processamento continua. |
+| `2xx` | Sucesso | A solicitação foi recebida, entendida e atendida. |
+| `3xx` | Redirecionamento | É necessária outra ação para concluir a solicitação, geralmente acessar outra URL. |
+| `4xx` | Erro do cliente | Há um problema na solicitação ou nas condições para atendê-la. |
+| `5xx` | Erro do servidor | O servidor encontrou uma falha ao tentar atender a solicitação. |
+
+O significado exato depende do código. As páginas individuais apresentam as diferenças e os exemplos correspondentes.
+
+## Rotas e navegação
+
+| Rota | Conteúdo |
+| --- | --- |
+| `/` | Página inicial, com os status agrupados por categoria. |
+| `/status/:code` | Detalhes do código informado, por exemplo `/status/404`. |
+| Qualquer outra rota | Página de código não encontrado. |
+
+Todos os códigos usam o mesmo componente de página. A rota fornece o código, e a aplicação procura os dados correspondentes no catálogo local. Assim, o conteúdo muda sem criar uma página separada para cada status.
+
+```mermaid
+flowchart LR
+    A[Home e categorias] --> B[Seleciona um card]
+    B --> C[URL /status/:code]
+    C --> D[Busca o código no catálogo]
+    D --> E[Página de detalhes]
+    D --> F[Não encontrado]
+```
+
+## Tecnologias
+
+| Tecnologia | Uso no projeto |
+| --- | --- |
+| React | Componentes e interface. |
+| TypeScript | Tipos para os dados e componentes. |
+| React Router | Rotas da home, das páginas de status e de erro. |
+| Tailwind CSS | Estilos e comportamento responsivo. |
+| Vite | Servidor de desenvolvimento e build. |
+| React Icons | Ícones da interface. |
 
 ## Executar localmente
 
-É necessário ter Node.js e npm instalados.
+### Pré-requisitos
+
+- Node.js instalado.
+- npm, incluído com Node.js.
+
+Na pasta do projeto, instale as dependências e inicie o servidor:
 
 ```bash
 npm install
 npm run dev
 ```
 
-Execute os comandos na pasta do projeto. O Vite exibirá no terminal o endereço local para abrir no navegador. Para abrir diretamente um status, use o endereço local seguido de `/status/` e do código. Por exemplo: `/status/404`.
+O Vite mostrará no terminal o endereço local da aplicação. Abra esse endereço no navegador. Para testar um status diretamente, acrescente `/status/` e o código à URL local, como em `/status/404`.
 
-## Scripts disponíveis
+### Comandos disponíveis
 
-| Comando | O que faz |
+| Comando | Descrição |
 | --- | --- |
 | `npm run dev` | Inicia o servidor de desenvolvimento. |
-| `npm run build` | Verifica os tipos e gera a versão de produção. |
-| `npm run preview` | Abre localmente a versão de produção gerada. |
-| `npm run lint` | Verifica problemas de código com Oxlint. |
+| `npm run build` | Verifica os tipos e cria o build de produção em `dist/`. |
+| `npm run preview` | Serve localmente o build de produção. |
+| `npm run lint` | Verifica o código com Oxlint. |
 
-## Tecnologias
+## Estrutura do projeto
 
-- React e TypeScript
-- Vite
-- React Router
-- Tailwind CSS
-- React Icons
+```text
+src/
+├── assets/images/       # Logo do HTTPmon
+├── components/
+│   ├── Cards/           # Cards da página inicial
+│   ├── CardsPokemon/    # Exibição da mídia do status
+│   └── Footer/          # Rodapé e navegação auxiliar
+├── pages/
+│   ├── Error/           # Rota não encontrada
+│   ├── Home/            # Lista de códigos por categoria
+│   └── Status/          # Página reutilizável de detalhes
+├── routes/              # Definição das rotas
+├── services/            # Catálogo local dos status HTTP
+├── types/               # Tipos compartilhados
+├── App.tsx
+└── globals.css          # Estilos globais
 
-## Organização do projeto
+docs/images/             # Capturas usadas neste README
+```
 
-- `src/pages/`: páginas inicial, de status e de erro.
-- `src/components/`: cards, conteúdo de mídia e footer.
-- `src/routes/`: rotas da aplicação.
-- `src/services/httpStatuses.ts`: dados dos códigos e informações exibidas nas páginas.
-- `src/types/`: tipos usados pelos dados de status.
+Os dados de cada status ficam em `src/services/httpStatuses.ts`. O tipo compartilhado em `src/types/` mantém a estrutura dos dados consistente entre os cards e as páginas de detalhes.
 
-As páginas individuais são montadas a partir do código da rota e dos dados locais. Assim, adicionar um status não exige criar uma página React separada para ele.
+## Mídias e escopo
 
-## Mídias
+As animações são carregadas de URLs do Tenor e precisam de conexão com a internet para aparecer. A aplicação não consulta a API do Tenor em cada acesso; ela usa as URLs cadastradas junto aos dados dos status.
 
-As animações são carregadas do Tenor e precisam de conexão com a internet para aparecer. O HTTPmon é um projeto educacional independente; Pokémon e seus personagens pertencem aos respectivos titulares.
+O catálogo inclui códigos HTTP e alguns códigos usados por serviços específicos. Quando um número não está cadastrado, a aplicação apresenta a página de código não encontrado.
+
+## Créditos
+
+O HTTPmon é um projeto educacional independente. Pokémon e seus personagens são propriedade de seus respectivos titulares. As animações são disponibilizadas pelo Tenor e usadas como referência visual para explicar os status HTTP.

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { StatusMedia } from '../../types/types'
+import MediaLoader from '../MediaLoader/MediaLoader'
 
 type CardsPokemonProps = {
   media: StatusMedia
@@ -75,10 +76,7 @@ export default function CardsPokemon({ media, alt, mediaType, layout = 'detail' 
         />
       )}
       {(!src || !hasLoaded || hasError) && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-[#123e79] px-4 text-center text-white">
-          <span aria-hidden="true" className="text-4xl font-black tracking-tight text-[#b8d9ff]">HTTP</span>
-          <span className="text-sm font-medium text-white/80">{placeholderText}</span>
-        </div>
+        <MediaLoader message={placeholderText} isLoading={Boolean(src) && !hasError} />
       )}
     </div>
   )

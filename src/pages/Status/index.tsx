@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router'
 import { FiArrowLeft, FiArrowRight, FiExternalLink } from 'react-icons/fi'
 import CardsPokemon from '../../components/CardsPokemon/CardsPokemon'
 import Footer from '../../components/Footer/Footer'
+import ResolutionGuide from '../../components/ResolutionGuide/ResolutionGuide'
 import { getHttpStatus, httpStatuses } from '../../services/httpStatuses'
 
 type TypePalette = { color: string; background: string; border: string; foreground?: string }
@@ -131,7 +132,7 @@ export default function StatusPage() {
         <div className="px-4 pb-10 sm:px-8 sm:pb-14">
           <section aria-label={`${status.code} ${status.name}`} className="grid min-w-0 items-start gap-6 md:grid-cols-2 md:gap-8">
             <figure className="w-full min-w-0 rounded-3xl border border-[#dce6f3] bg-white p-3 shadow-[0_14px_36px_rgba(18,62,121,0.10)] sm:p-4">
-              <CardsPokemon alt={status.mediaDescription} media={status.media} mediaType={status.mediaType} />
+              <CardsPokemon key={status.code} alt={status.mediaDescription} media={status.media} mediaType={status.mediaType} />
               <figcaption className="px-1 pt-2 text-sm text-[#55708f]">{status.mediaDescription}</figcaption>
             </figure>
 
@@ -187,6 +188,8 @@ export default function StatusPage() {
               <pre className="max-w-full overflow-x-auto rounded-md bg-[#17263b] px-4 py-5 text-sm leading-6 text-[#f4f8ff] sm:text-base"><code>{status.example}</code></pre>
             </section>
           </section>
+
+          {status.resolutionSteps && <ResolutionGuide steps={status.resolutionSteps} />}
 
           <section aria-labelledby="references-title" className="mt-4 border-t border-[#b8d7f7] pt-6 sm:mt-5 sm:pt-7">
             <SectionHeading id="references-title">Consulte também</SectionHeading>

@@ -1,6 +1,5 @@
 import { useLayoutEffect } from 'react'
-import { Route, Routes, useLocation } from 'react-router'
-import ErrorPage from '../pages/Error'
+import { Navigate, Route, Routes, useLocation } from 'react-router'
 import HomePage from '../pages/Home'
 import StatusPage from '../pages/Status'
 
@@ -30,7 +29,7 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/status/:code" element={<StatusPage />} />
-        <Route path="*" element={<ErrorPage />} />
+        <Route path="*" element={<Navigate to="/status/404" replace />} />
       </Routes>
     </>
   )

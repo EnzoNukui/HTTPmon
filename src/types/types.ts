@@ -10,6 +10,11 @@ export type StatusMedia = {
   full?: string
 }
 
+export type ResolutionStep = {
+  title: string
+  description: string
+}
+
 export type HttpStatus = {
   code: number
   name: string
@@ -20,6 +25,7 @@ export type HttpStatus = {
   meaning: string
   example: string
   commonCauses: string[]
+  resolutionSteps?: ResolutionStep[]
   relatedStatuses: RelatedStatus[]
   media: StatusMedia
   mediaType: 'gif' | 'video'

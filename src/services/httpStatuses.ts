@@ -1,4 +1,4 @@
-import type { HttpStatus } from '../types/types'
+import type { HttpStatus, ResolutionStep } from '../types/types'
 
 const informationalStatuses: HttpStatus[] = [
   {
@@ -573,6 +573,20 @@ const notFound: HttpStatus = {
     'Rota inexistente na aplicação',
     'Recurso removido ou movido',
   ],
+  resolutionSteps: [
+    {
+      title: 'Confira o endereço',
+      description: 'Veja se a URL foi digitada corretamente.',
+    },
+    {
+      title: 'Verifique a rota',
+      description: 'Confirme se o caminho existe na aplicação.',
+    },
+    {
+      title: 'Procure o recurso',
+      description: 'Veja se foi removido ou mudou de endereço.',
+    },
+  ],
   relatedStatuses: [
     { code: 400, name: 'Bad Request' },
     { code: 403, name: 'Forbidden' },
@@ -588,6 +602,279 @@ const notFound: HttpStatus = {
     'Psyduck e Slowpoke aparecem perdidos, como quem procura algo no lugar errado. A cena ajuda a lembrar que o servidor não encontrou o recurso pedido.',
 }
 
+const resolutionStepsByCode: Partial<Record<number, ResolutionStep[]>> = {
+  400: [
+    { title: 'Revise a solicitação', description: 'Confira a sintaxe, os parâmetros e os cabeçalhos enviados.' },
+    { title: 'Valide os dados', description: 'Compare o formato enviado com o esperado pela API.' },
+    { title: 'Tente novamente', description: 'Corrija os campos inválidos e reenvie a solicitação.' },
+  ],
+  401: [
+    { title: 'Entre na sua conta', description: 'Confirme que você está autenticado no serviço.' },
+    { title: 'Atualize as credenciais', description: 'Renove o token ou corrija os dados de acesso.' },
+    { title: 'Envie a solicitação outra vez', description: 'Inclua as credenciais válidas e tente novamente.' },
+  ],
+  402: [
+    { title: 'Confira a regra do serviço', description: 'Verifique se o recurso depende de um plano ou pagamento.' },
+    { title: 'Consulte sua conta', description: 'Confirme o acesso e a situação da assinatura no próprio serviço.' },
+    { title: 'Fale com o suporte', description: 'O significado desse código varia entre aplicações.' },
+  ],
+  403: [
+    { title: 'Confira sua permissão', description: 'Veja se sua conta pode acessar este recurso.' },
+    { title: 'Revise a política de acesso', description: 'Consulte as regras da organização ou do serviço.' },
+    { title: 'Peça acesso ao responsável', description: 'A autenticação sozinha pode não liberar o recurso.' },
+  ],
+  405: [
+    { title: 'Confira o método', description: 'Veja se a rota aceita GET, POST, PUT ou outro método.' },
+    { title: 'Consulte o cabeçalho Allow', description: 'Ele pode informar quais métodos são aceitos.' },
+    { title: 'Use uma rota compatível', description: 'Ajuste o método ou escolha o endpoint correto.' },
+  ],
+  406: [
+    { title: 'Confira o formato pedido', description: 'Revise os tipos listados no cabeçalho Accept.' },
+    { title: 'Escolha um formato disponível', description: 'Use uma representação oferecida pelo servidor.' },
+    { title: 'Tente sem preferência', description: 'Remova restrições de formato se elas não forem necessárias.' },
+  ],
+  407: [
+    { title: 'Confira a configuração do proxy', description: 'Veja se a rede realmente exige autenticação.' },
+    { title: 'Atualize as credenciais', description: 'Use os dados de acesso fornecidos pela organização.' },
+    { title: 'Peça ajuda ao administrador', description: 'Confirme o endereço, a porta e o método de autenticação do proxy.' },
+  ],
+  408: [
+    { title: 'Verifique a conexão', description: 'Confirme se a rede está estável e ativa.' },
+    { title: 'Reenvie a solicitação', description: 'Tente novamente e conclua o envio dentro do prazo.' },
+    { title: 'Reduza o envio', description: 'Se persistir, envie o conteúdo em partes menores.' },
+  ],
+  409: [
+    { title: 'Atualize os dados', description: 'Busque a versão mais recente do recurso.' },
+    { title: 'Resolva o conflito', description: 'Compare as alterações e escolha quais devem permanecer.' },
+    { title: 'Envie uma nova atualização', description: 'Repita a operação usando o estado atualizado.' },
+  ],
+  410: [
+    { title: 'Atualize o endereço', description: 'Confira se o serviço anunciou uma nova localização.' },
+    { title: 'Remova o link antigo', description: 'Atualize favoritos, atalhos ou integrações salvas.' },
+    { title: 'Procure uma alternativa', description: 'O recurso foi removido e pode não ter substituto.' },
+  ],
+  411: [
+    { title: 'Confira o corpo enviado', description: 'Verifique se a solicitação inclui conteúdo.' },
+    { title: 'Informe o tamanho', description: 'Envie o cabeçalho Content-Length quando exigido.' },
+    { title: 'Use um cliente atualizado', description: 'Bibliotecas HTTP atuais costumam calcular esse valor automaticamente.' },
+  ],
+  412: [
+    { title: 'Busque a versão atual', description: 'Leia o recurso e obtenha seu ETag ou data de modificação.' },
+    { title: 'Atualize a condição', description: 'Corrija os cabeçalhos If-Match ou If-Unmodified-Since.' },
+    { title: 'Tente novamente', description: 'Envie a alteração com a versão mais recente do recurso.' },
+  ],
+  413: [
+    { title: 'Reduza o conteúdo', description: 'Diminua o tamanho do arquivo ou do corpo enviado.' },
+    { title: 'Divida o envio', description: 'Use partes menores se o serviço aceitar uploads em blocos.' },
+    { title: 'Consulte o limite', description: 'Quem administra o servidor pode revisar o tamanho máximo permitido.' },
+  ],
+  414: [
+    { title: 'Encurte o endereço', description: 'Reduza parâmetros e valores na URL.' },
+    { title: 'Mova os dados para o corpo', description: 'Quando apropriado, envie dados extensos no corpo da solicitação.' },
+    { title: 'Revise os redirecionamentos', description: 'Uma cadeia de redirecionamentos pode estar aumentando a URL.' },
+  ],
+  415: [
+    { title: 'Confira o tipo enviado', description: 'Veja o valor do cabeçalho Content-Type.' },
+    { title: 'Use um formato aceito', description: 'Consulte a documentação do endpoint para ver os tipos suportados.' },
+    { title: 'Envie os dados no formato correto', description: 'Ajuste o corpo da solicitação e tente novamente.' },
+  ],
+  416: [
+    { title: 'Confira o tamanho do recurso', description: 'Busque a representação atual antes de solicitar um trecho.' },
+    { title: 'Ajuste o intervalo', description: 'Garanta que o cabeçalho Range esteja dentro dos bytes disponíveis.' },
+    { title: 'Tente obter o recurso completo', description: 'Remova Range se não precisar de uma parte específica.' },
+  ],
+  417: [
+    { title: 'Revise o cabeçalho Expect', description: 'Confira se a expectativa enviada é suportada pelo servidor.' },
+    { title: 'Ajuste o cliente HTTP', description: 'Remova Expect: 100-continue se o fluxo não precisar dele.' },
+    { title: 'Tente novamente', description: 'Reenvie a solicitação com cabeçalhos compatíveis.' },
+  ],
+  419: [
+    { title: 'Atualize a sessão', description: 'Entre novamente se sua sessão expirou.' },
+    { title: 'Recarregue o formulário', description: 'Abra a página de novo para obter um token atualizado.' },
+    { title: 'Envie novamente', description: 'Preencha e envie o formulário recém-carregado.' },
+  ],
+  420: [
+    { title: 'Diminua a frequência', description: 'Espere um pouco antes de fazer novas solicitações.' },
+    { title: 'Confira os limites do serviço', description: 'Siga os limites e orientações documentados pelo provedor.' },
+    { title: 'Tente mais tarde', description: 'Esse código é específico de algumas aplicações e não tem uso HTTP padronizado.' },
+  ],
+  421: [
+    { title: 'Confira o domínio', description: 'Verifique se a solicitação usa o hostname esperado pelo servidor.' },
+    { title: 'Abra uma nova conexão', description: 'Tente novamente em uma conexão separada.' },
+    { title: 'Revise o proxy', description: 'Quem administra a infraestrutura deve conferir roteamento e configuração do host.' },
+  ],
+  422: [
+    { title: 'Leia os detalhes do erro', description: 'A resposta pode indicar quais campos foram rejeitados.' },
+    { title: 'Corrija os valores', description: 'Confira tipos, formatos e regras exigidas pelo recurso.' },
+    { title: 'Envie os dados corrigidos', description: 'A sintaxe pode estar correta, mas os valores precisam ser válidos.' },
+  ],
+  423: [
+    { title: 'Confira o bloqueio', description: 'Verifique se outra operação está usando o recurso.' },
+    { title: 'Aguarde a liberação', description: 'Tente novamente quando o bloqueio temporário terminar.' },
+    { title: 'Peça ao responsável', description: 'Em WebDAV, quem administra pode liberar o recurso bloqueado.' },
+  ],
+  424: [
+    { title: 'Verifique a operação anterior', description: 'Este passo depende de outra operação que falhou.' },
+    { title: 'Corrija a falha inicial', description: 'Consulte a resposta da operação anterior para localizar a causa.' },
+    { title: 'Repita a sequência', description: 'Depois de corrigir a dependência, execute o fluxo novamente.' },
+  ],
+  425: [
+    { title: 'Envie após estabelecer a conexão', description: 'O servidor pode não aceitar dados antecipados nesta operação.' },
+    { title: 'Evite repetir ações não seguras', description: 'Confirme que a solicitação pode ser reenviada sem duplicar efeitos.' },
+    { title: 'Tente novamente', description: 'Envie a solicitação após a conexão segura estar estabelecida.' },
+  ],
+  426: [
+    { title: 'Confira o protocolo exigido', description: 'Leia os cabeçalhos Upgrade enviados na resposta.' },
+    { title: 'Atualize o cliente', description: 'Use uma versão compatível com o protocolo solicitado.' },
+    { title: 'Repita a solicitação', description: 'Tente novamente usando a conexão atualizada.' },
+  ],
+  428: [
+    { title: 'Busque a versão do recurso', description: 'Leia o ETag ou outra informação de versão atual.' },
+    { title: 'Inclua uma precondição', description: 'Use If-Match ou o cabeçalho exigido pelo serviço.' },
+    { title: 'Envie a alteração', description: 'A precondição ajuda a evitar sobrescrever mudanças recentes.' },
+  ],
+  429: [
+    { title: 'Confira Retry-After', description: 'A resposta pode informar quanto tempo esperar.' },
+    { title: 'Reduza a frequência', description: 'Espalhe as solicitações e evite novas tentativas em sequência.' },
+    { title: 'Tente após a espera', description: 'Respeite os limites publicados pelo serviço.' },
+  ],
+  431: [
+    { title: 'Reduza os cabeçalhos', description: 'Remova campos desnecessários ou valores muito extensos.' },
+    { title: 'Revise os cookies', description: 'Cookies acumulados podem aumentar demais o tamanho enviado.' },
+    { title: 'Tente novamente', description: 'Quem administra o servidor pode ajustar o limite se necessário.' },
+  ],
+  444: [
+    { title: 'Tente novamente', description: 'O servidor encerrou a conexão sem enviar uma resposta HTTP.' },
+    { title: 'Confira a solicitação', description: 'Verifique URL, cabeçalhos e se a rede permite a conexão.' },
+    { title: 'Consulte os logs', description: 'Esse código é específico do Nginx; a causa depende da configuração do servidor.' },
+  ],
+  450: [
+    { title: 'Confira as regras da rede', description: 'O acesso pode estar bloqueado por controles definidos no dispositivo ou na rede.' },
+    { title: 'Converse com o responsável', description: 'Um responsável ou administrador pode explicar a política aplicada.' },
+    { title: 'Use uma alternativa permitida', description: 'A disponibilidade depende das regras do serviço e da rede.' },
+  ],
+  451: [
+    { title: 'Leia a informação do serviço', description: 'A resposta pode explicar a restrição legal aplicada.' },
+    { title: 'Consulte o responsável pelo conteúdo', description: 'Peça esclarecimentos ao provedor ou à organização.' },
+    { title: 'Procure uma fonte autorizada', description: 'A disponibilidade pode variar conforme a jurisdição.' },
+  ],
+  495: [
+    { title: 'Confira o certificado TLS', description: 'Verifique validade, cadeia de confiança e hostname.' },
+    { title: 'Renove ou corrija o certificado', description: 'Quem administra o servidor deve instalar uma cadeia válida.' },
+    { title: 'Não desative a validação', description: 'Ignorar erros de certificado reduz a segurança da conexão.' },
+  ],
+  496: [
+    { title: 'Confira se o serviço exige certificado', description: 'Este código costuma indicar exigência de certificado do cliente.' },
+    { title: 'Solicite um certificado válido', description: 'Peça a emissão ou instalação ao administrador da organização.' },
+    { title: 'Tente novamente com o certificado', description: 'O cliente deve apresentá-lo durante a conexão TLS.' },
+  ],
+  497: [
+    { title: 'Confira o endereço usado', description: 'A porta selecionada espera uma conexão HTTPS.' },
+    { title: 'Use HTTPS', description: 'Altere o esquema de http:// para https://.' },
+    { title: 'Confirme a porta', description: 'Se você mantém o serviço, confira a porta configurada para cada protocolo.' },
+  ],
+  498: [
+    { title: 'Atualize o token', description: 'Gere ou solicite uma credencial válida.' },
+    { title: 'Confira o formato', description: 'Veja se o token foi enviado sem espaços ou cortes.' },
+    { title: 'Revise a validação', description: 'Quem mantém a aplicação deve conferir assinatura, chave e expiração.' },
+  ],
+  499: [
+    { title: 'Confira se a solicitação foi cancelada', description: 'O cliente pode ter fechado a página ou interrompido o envio.' },
+    { title: 'Verifique a conexão', description: 'Instabilidade ou timeout pode encerrar a solicitação antes da resposta.' },
+    { title: 'Tente novamente', description: 'Se persistir, quem mantém o serviço pode consultar os logs do cliente e do servidor.' },
+  ],
+  500: [
+    { title: 'Tente novamente mais tarde', description: 'Se o erro persistir, informe o responsável pelo serviço.' },
+    { title: 'Confira os logs', description: 'Quem mantém o servidor pode localizar a exceção que gerou a resposta.' },
+    { title: 'Revise mudanças recentes', description: 'Deploys, dependências e configuração podem ter introduzido a falha.' },
+  ],
+  501: [
+    { title: 'Confira o recurso solicitado', description: 'Veja se o servidor oferece essa funcionalidade ou método.' },
+    { title: 'Use uma alternativa suportada', description: 'Consulte a documentação do serviço para encontrar outra operação.' },
+    { title: 'Implemente o suporte', description: 'Quem mantém o servidor pode adicionar a funcionalidade se ela for necessária.' },
+  ],
+  502: [
+    { title: 'Tente novamente', description: 'Uma falha temporária no servidor intermediário pode se resolver.' },
+    { title: 'Confira o serviço de origem', description: 'Quem administra deve verificar se o servidor upstream está respondendo.' },
+    { title: 'Revise o gateway', description: 'Confira DNS, proxy e o formato da resposta recebida.' },
+  ],
+  503: [
+    { title: 'Aguarde e tente novamente', description: 'Respeite o cabeçalho Retry-After quando ele estiver presente.' },
+    { title: 'Confira a disponibilidade', description: 'Veja se o serviço anunciou manutenção ou interrupção.' },
+    { title: 'Revise capacidade e saúde', description: 'Quem mantém o serviço pode verificar carga, dependências e instâncias.' },
+  ],
+  504: [
+    { title: 'Tente novamente se for seguro', description: 'Evite repetir operações que possam ser executadas duas vezes.' },
+    { title: 'Verifique o serviço de origem', description: 'Quem administra deve conferir lentidão ou indisponibilidade do upstream.' },
+    { title: 'Revise os timeouts', description: 'Ajuste prazos somente depois de investigar a demora do serviço.' },
+  ],
+  505: [
+    { title: 'Confira a versão HTTP', description: 'Veja qual versão o servidor aceita.' },
+    { title: 'Atualize o cliente', description: 'Use uma biblioteca ou navegador compatível com essa versão.' },
+    { title: 'Revise o servidor', description: 'Quem mantém o serviço pode habilitar uma versão adequada aos clientes.' },
+  ],
+  506: [
+    { title: 'Confira a negociação de conteúdo', description: 'Revise as variantes configuradas para o mesmo recurso.' },
+    { title: 'Corrija a configuração', description: 'Quem mantém o servidor deve evitar referências circulares entre variantes.' },
+    { title: 'Tente novamente', description: 'Repita após publicar a configuração corrigida.' },
+  ],
+  507: [
+    { title: 'Tente mais tarde', description: 'Se você está usando o serviço, avise a equipe responsável.' },
+    { title: 'Confira o espaço disponível', description: 'Quem mantém o servidor deve revisar disco, armazenamento e cotas.' },
+    { title: 'Libere ou amplie o espaço', description: 'Remova dados obsoletos ou aumente a capacidade conforme necessário.' },
+  ],
+  508: [
+    { title: 'Evite repetir a operação', description: 'Novas tentativas podem percorrer o mesmo ciclo.' },
+    { title: 'Localize a referência circular', description: 'Quem mantém o sistema deve conferir dependências e regras de reescrita.' },
+    { title: 'Interrompa o loop', description: 'Adicione uma condição de parada e teste novamente.' },
+  ],
+  509: [
+    { title: 'Confira o consumo de banda', description: 'Esse código depende do provedor e não é padronizado pelo HTTP.' },
+    { title: 'Aguarde a renovação da cota', description: 'O limite pode ser redefinido conforme o período do serviço.' },
+    { title: 'Fale com o provedor', description: 'Quem administra a conta pode revisar tráfego e limites contratados.' },
+  ],
+  510: [
+    { title: 'Consulte a documentação da aplicação', description: 'O significado desse código legado depende do serviço.' },
+    { title: 'Confira as extensões exigidas', description: 'Veja se o cliente e o servidor têm suporte compatível.' },
+    { title: 'Revise a implementação', description: 'Quem mantém o sistema pode migrar para um fluxo HTTP atual.' },
+  ],
+  511: [
+    { title: 'Conecte-se à rede', description: 'Abra o portal de autenticação da rede ou aguarde a página de acesso.' },
+    { title: 'Conclua a autenticação', description: 'Entre ou aceite os termos conforme as instruções da rede.' },
+    { title: 'Tente acessar novamente', description: 'Depois de obter acesso à rede, recarregue o endereço desejado.' },
+  ],
+  521: [
+    { title: 'Tente novamente mais tarde', description: 'O servidor de origem pode estar temporariamente indisponível.' },
+    { title: 'Confira se a origem está online', description: 'Quem mantém o site deve verificar serviço e portas de origem.' },
+    { title: 'Revise o firewall', description: 'Permita as conexões do Cloudflare e confira as regras de rede.' },
+  ],
+  522: [
+    { title: 'Tente novamente mais tarde', description: 'A conexão do Cloudflare com a origem excedeu o tempo limite.' },
+    { title: 'Verifique a carga da origem', description: 'Quem mantém o site deve investigar lentidão ou saturação.' },
+    { title: 'Revise rede e firewall', description: 'Confira rotas, perda de pacotes e conexões do Cloudflare.' },
+  ],
+  523: [
+    { title: 'Confira o endereço IP da origem', description: 'Verifique se o DNS aponta para o servidor correto.' },
+    { title: 'Teste a conectividade', description: 'Quem mantém o site deve confirmar rota e acesso à origem.' },
+    { title: 'Revise as regras de rede', description: 'Confira firewall, provedor e configuração do DNS.' },
+  ],
+  525: [
+    { title: 'Confira o certificado TLS', description: 'Verifique validade, cadeia e protocolos habilitados na origem.' },
+    { title: 'Teste o handshake', description: 'Quem mantém o site pode conferir os logs e a configuração TLS do servidor.' },
+    { title: 'Revise a conexão com o Cloudflare', description: 'Confirme que a origem aceita conexões seguras compatíveis.' },
+  ],
+  530: [
+    { title: 'Confira o hostname da origem', description: 'Verifique se o nome configurado existe e está escrito corretamente.' },
+    { title: 'Revise os registros DNS', description: 'Confirme os registros A ou AAAA e a propagação do DNS.' },
+    { title: 'Consulte os detalhes do Cloudflare', description: 'O código 1xxx exibido na resposta pode apontar a causa específica.' },
+  ],
+  599: [
+    { title: 'Verifique a conexão', description: 'Confirme se o cliente ou proxy alcança o servidor.' },
+    { title: 'Tente novamente com cuidado', description: 'Repita somente se a operação puder ser executada mais de uma vez.' },
+    { title: 'Consulte os logs do intermediário', description: 'Esse código varia entre softwares e pode não ter sido enviado pela origem.' },
+  ],
+}
+
 export const httpStatuses: HttpStatus[] = [
   ...informationalStatuses,
   ...successfulStatuses,
@@ -595,7 +882,10 @@ export const httpStatuses: HttpStatus[] = [
   ...clientErrorStatuses,
   ...serverErrorStatuses,
   notFound,
-].sort((left, right) => left.code - right.code)
+].map((status) => {
+  const resolutionSteps = status.resolutionSteps ?? resolutionStepsByCode[status.code]
+  return resolutionSteps ? { ...status, resolutionSteps } : status
+}).sort((left, right) => left.code - right.code)
 
 export function getHttpStatus(code: number): HttpStatus | undefined {
   return httpStatuses.find((status) => status.code === code)

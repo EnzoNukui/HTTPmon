@@ -1,44 +1,35 @@
 <div align="center">
 
-# HTTPmon
-
-### Aprenda códigos de status HTTP através do universo Pokémon.
-
-Uma experiência visual e interativa para explorar códigos HTTP, entender seus significados e aprender através de exemplos práticos e cenas de Pokémon.
+<img src="src/assets/images/Logotipo_httpmon_transparente.png" alt="Logo HTTPmon" width="360" />
 
 <br>
 
-<a href="https://httpmon.vercel.app/">
-  <strong>🌐 Acessar o HTTPmon</strong>
-</a>
+Aplicação web para explorar códigos de status HTTP através de exemplos práticos e cenas do universo Pokémon.
 
 <br><br>
 
-<img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white" alt="React 19" />
-<img src="https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white" alt="TypeScript 6" />
-<img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind CSS 4" />
-<img src="https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white" alt="Vite 8" />
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
+[![Vercel](https://img.shields.io/badge/Vercel-Deploy-000000?logo=vercel&logoColor=white)](https://vercel.com/)
+
+### [Acessar online](https://httpmon.vercel.app/) · [Repositório](https://github.com/EnzoNukui/HTTPmon)
 
 </div>
 
 ---
 
-## 🖥️ Demonstração
+## Preview
 
-<table>
-  <tr>
-    <td width="50%">
-      <img src="docs/images/home.png" alt="Página inicial do HTTPmon" width="100%" />
-    </td>
-    <td width="50%">
-      <img src="docs/images/status-404.png" alt="Página do status HTTP 404 Not Found" width="100%" />
-    </td>
-  </tr>
-</table>
+<p align="center">
+  <img src="docs/images/home.png" alt="Página inicial do HTTPmon" width="49%" />
+  <img src="docs/images/status-404.png" alt="Página do status HTTP 404 Not Found" width="49%" />
+</p>
 
 ---
 
-## 📖 Sobre o projeto
+## Sobre o projeto
 
 O **HTTPmon** é uma aplicação web criada para tornar o aprendizado de códigos de status HTTP mais visual, intuitivo e divertido.
 
@@ -48,7 +39,7 @@ O projeto nasceu como uma forma de unir desenvolvimento front-end com um conceit
 
 ---
 
-## ✨ Funcionalidades
+## Funcionalidades
 
 - Consulta de códigos de status HTTP das categorias `1xx` a `5xx`.
 - Página dedicada para cada código.
@@ -62,77 +53,11 @@ O projeto nasceu como uma forma de unir desenvolvimento front-end com um conceit
 
 ---
 
-## 🛠️ Tecnologias
+## Como funciona
 
-| Tecnologia | Aplicação |
-| --- | --- |
-| **React** | Construção dos componentes e da interface da aplicação. |
-| **TypeScript** | Tipagem dos dados, propriedades e componentes. |
-| **React Router** | Navegação entre a página inicial, páginas de status e página de erro. |
-| **Tailwind CSS** | Estilização e responsividade da interface. |
-| **Vite** | Ambiente de desenvolvimento e geração do build da aplicação. |
-| **React Icons** | Ícones utilizados na interface. |
-| **Oxlint** | Análise estática e padronização do código. |
+O HTTPmon utiliza uma página reutilizável para exibir os detalhes de todos os códigos cadastrados.
 
----
-
-## 🚀 Executando localmente
-
-### Pré-requisitos
-
-Antes de começar, tenha instalado:
-
-- [Node.js](https://nodejs.org/)
-- Git
-
-### Clone o repositório
-
-```bash
-git clone https://github.com/EnzoNukui/HTTPmon.git
-```
-
-### Acesse a pasta do projeto
-
-```bash
-cd HTTPmon
-```
-
-### Instale as dependências
-
-```bash
-npm install
-```
-
-### Inicie o servidor de desenvolvimento
-
-```bash
-npm run dev
-```
-
-O Vite exibirá no terminal o endereço local da aplicação.
-
-Para acessar diretamente um código específico, utilize uma rota como:
-
-```text
-/status/404
-```
-
-### Comandos disponíveis
-
-| Comando | Descrição |
-| --- | --- |
-| `npm run dev` | Inicia o servidor de desenvolvimento. |
-| `npm run build` | Verifica os tipos e gera o build de produção em `dist/`. |
-| `npm run preview` | Executa localmente o build de produção. |
-| `npm run lint` | Analisa o código com Oxlint. |
-
----
-
-## 🧩 Como funciona
-
-O HTTPmon utiliza uma página de status reutilizável para todos os códigos disponíveis.
-
-Ao selecionar um código na página inicial, a aplicação navega para uma rota dinâmica no formato:
+Ao selecionar um status na página inicial, a aplicação navega para uma rota dinâmica no formato:
 
 ```text
 /status/:code
@@ -144,9 +69,7 @@ Por exemplo:
 /status/404
 ```
 
-O código presente na URL é utilizado para localizar as informações correspondentes no catálogo local da aplicação. A página então é preenchida dinamicamente com os dados daquele status.
-
-Dessa forma, não é necessário criar uma página diferente manualmente para cada código HTTP.
+O código presente na URL é usado para localizar as informações correspondentes no catálogo local da aplicação. A mesma estrutura de página é então preenchida dinamicamente com os dados daquele status.
 
 ```mermaid
 flowchart LR
@@ -167,86 +90,166 @@ flowchart LR
 
 ---
 
-## 📁 Estrutura do projeto
+## Tecnologias
+
+### Frontend
+
+- **React 19**
+- **TypeScript 6**
+- **React Router 8**
+- **Tailwind CSS 4**
+- **React Icons**
+- **Vite 8**
+
+### Qualidade de código
+
+- **Oxlint**
+
+### Deploy
+
+- **Vercel**
+
+---
+
+## Estrutura do projeto
 
 ```text
 src/
 ├── assets/
-│   └── images/          # Imagens e identidade visual do HTTPmon
+│   └── images/          # Imagens e identidade visual
 │
 ├── components/
-│   ├── Cards/           # Cards dos status exibidos na página inicial
-│   ├── CardsPokemon/    # Exibição das mídias relacionadas aos status
+│   ├── Cards/           # Cards exibidos na página inicial
+│   ├── CardsPokemon/    # Mídias relacionadas aos status
 │   └── Footer/          # Rodapé e navegação auxiliar
 │
 ├── pages/
-│   ├── Error/           # Página exibida para rotas ou códigos inexistentes
-│   ├── Home/            # Página inicial com os códigos HTTP
-│   └── Status/          # Página reutilizável de detalhes dos status
+│   ├── Error/           # Página para rotas e códigos inexistentes
+│   ├── Home/            # Página inicial
+│   └── Status/          # Página reutilizável de detalhes
 │
-├── routes/              # Configuração das rotas da aplicação
-├── services/            # Catálogo e informações dos códigos HTTP
-├── types/               # Tipos compartilhados da aplicação
+├── routes/              # Configuração das rotas
+├── services/            # Catálogo dos códigos HTTP
+├── types/               # Tipos compartilhados
 │
 ├── App.tsx
-└── globals.css          # Estilos globais
+└── globals.css
 
 docs/
-└── images/              # Capturas utilizadas neste README
+└── images/              # Capturas utilizadas no README
 ```
 
-As informações de cada código estão centralizadas em:
+As informações dos códigos ficam centralizadas em:
 
 ```text
 src/services/httpStatuses.ts
 ```
 
-Isso permite que os componentes sejam reutilizados e preenchidos dinamicamente de acordo com o status acessado.
+Essa estrutura permite reutilizar os mesmos componentes e alterar apenas os dados exibidos de acordo com o código acessado.
 
 ---
 
-## 🧠 Aprendizados
+## Executar localmente
 
-Durante o desenvolvimento do HTTPmon, foram aplicados e aprofundados conceitos como:
+### Pré-requisitos
 
-- componentização de interfaces utilizando React;
+- Node.js
+- Git
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/EnzoNukui/HTTPmon.git
+```
+
+### 2. Acesse a pasta
+
+```bash
+cd HTTPmon
+```
+
+### 3. Instale as dependências
+
+```bash
+npm install
+```
+
+### 4. Inicie a aplicação
+
+```bash
+npm run dev
+```
+
+O Vite exibirá no terminal o endereço local da aplicação.
+
+### Comandos disponíveis
+
+| Comando | Descrição |
+| --- | --- |
+| `npm run dev` | Inicia o servidor de desenvolvimento. |
+| `npm run build` | Verifica os tipos e gera o build de produção. |
+| `npm run preview` | Executa localmente o build de produção. |
+| `npm run lint` | Analisa o código utilizando Oxlint. |
+
+---
+
+## Principais aprendizados
+
+O desenvolvimento do HTTPmon permitiu trabalhar com:
+
+- componentização de interfaces com React;
 - tipagem de dados e componentes com TypeScript;
-- criação e utilização de rotas dinâmicas com React Router;
+- rotas dinâmicas com React Router;
 - reutilização de componentes a partir de dados estruturados;
-- organização e centralização de informações em um catálogo local;
+- organização de informações em um catálogo local;
 - desenvolvimento de layouts responsivos com Tailwind CSS;
 - tratamento de rotas e códigos inexistentes;
 - organização da estrutura de uma aplicação React;
-- funcionamento e significado dos principais códigos de status HTTP.
+- funcionamento e significado dos códigos de status HTTP.
 
-Além da parte técnica, o projeto também exigiu a criação de uma relação visual entre cada código HTTP e uma situação do universo Pokémon, buscando facilitar a memorização e tornar o conteúdo mais acessível.
-
----
-
-## 🎬 Mídias e escopo
-
-As animações utilizadas no projeto são carregadas a partir de URLs do **Tenor** e, portanto, precisam de conexão com a internet para serem exibidas.
-
-A aplicação não realiza uma consulta à API do Tenor a cada acesso. As URLs das mídias ficam cadastradas junto às informações de cada status HTTP.
-
-O catálogo contém códigos HTTP padronizados e também alguns códigos utilizados por serviços e plataformas específicas.
-
-Caso o usuário tente acessar um código que não esteja cadastrado, a aplicação apresenta uma página personalizada informando que aquele código não foi encontrado.
+O projeto também envolveu a criação de relações visuais entre códigos HTTP e situações do universo Pokémon, buscando tornar conceitos técnicos mais fáceis de interpretar e memorizar.
 
 ---
 
-## ⚠️ Aviso
+## Mídias e escopo
+
+As animações utilizadas no HTTPmon são carregadas através de URLs do **Tenor** e precisam de conexão com a internet para serem exibidas.
+
+A aplicação não realiza uma consulta à API do Tenor a cada acesso. As URLs das mídias ficam armazenadas junto aos dados de cada status.
+
+O catálogo inclui códigos HTTP padronizados e também alguns códigos utilizados por serviços e plataformas específicas.
+
+---
+
+## Aviso
 
 O HTTPmon é um projeto educacional independente e não possui vínculo oficial com Pokémon, The Pokémon Company, Nintendo, Game Freak ou Creatures Inc.
 
 Pokémon e seus personagens são propriedade de seus respectivos titulares.
 
-As animações utilizadas no projeto são disponibilizadas através do Tenor e são utilizadas apenas como recurso visual e educacional para representar os códigos de status HTTP.
+As animações utilizadas são disponibilizadas através do Tenor e usadas somente como recurso visual e educacional.
 
 ---
 
-## 👨‍💻 Autor
+## Status
+
+O projeto está funcional e disponível online.
+
+**Demo:** https://httpmon.vercel.app/
+
+---
+
+## Autor
 
 Desenvolvido por **Enzo Nukui**.
 
-[GitHub](https://github.com/EnzoNukui) • [LinkedIn](https://www.linkedin.com/in/enzo-nukui/)
+- GitHub: [@EnzoNukui](https://github.com/EnzoNukui)
+- LinkedIn: [linkedin.com/in/enzo-nukui](https://www.linkedin.com/in/enzo-nukui/)
+
+---
+
+<div align="center">
+
+Projeto desenvolvido para unir **desenvolvimento front-end, HTTP e aprendizado visual** em uma única aplicação.
+
+</div>

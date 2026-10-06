@@ -1,10 +1,11 @@
 import type { ReactNode } from 'react'
 import { Link, useParams } from 'react-router'
-import { FiArrowLeft, FiArrowRight, FiExternalLink } from 'react-icons/fi'
+import { FiArrowLeft, FiArrowRight, FiExternalLink, FiFileText, FiGlobe, FiRefreshCw, FiUsers } from 'react-icons/fi'
 import CardsPokemon from '../../components/CardsPokemon/CardsPokemon'
 import Footer from '../../components/Footer/Footer'
 import ResolutionGuide from '../../components/ResolutionGuide/ResolutionGuide'
 import { getHttpStatus, httpStatuses } from '../../services/httpStatuses'
+import type { HttpStatus } from '../../types/types'
 
 type TypePalette = { color: string; background: string; border: string; foreground?: string }
 
@@ -42,6 +43,82 @@ function getCausePalette(cause: string, index: number): TypePalette {
 
   const palettes = Object.values(typePalettes)
   return palettes[(index + text.length) % palettes.length]
+}
+
+function getDistinctCausePalettes(causes: string[]): TypePalette[] {
+  const palettes = Object.values(typePalettes)
+  const usedColors = new Set<string>()
+
+  return causes.map((cause, index) => {
+    const preferred = getCausePalette(cause, index)
+    if (!usedColors.has(preferred.color)) {
+      usedColors.add(preferred.color)
+      return preferred
+    }
+
+    const fallback = palettes.find((palette) => !usedColors.has(palette.color))
+    if (fallback) {
+      usedColors.add(fallback.color)
+      return fallback
+    }
+
+    return preferred
+  })
+}
+
+type StatusProfile = { origin: string; owner: string; retry: string }
+
+function getStatusProfile(status: HttpStatus): StatusProfile {
+  const specificProfiles: Record<number, StatusProfile> = {
+    100: { origin: 'Solicitação', owner: 'Cliente', retry: 'Continue o envio' },
+    101: { origin: 'Conexão', owner: 'Cliente e servidor', retry: 'Use o protocolo acordado' },
+    102: { origin: 'Processamento', owner: 'Cliente', retry: 'Aguarde a conclusão' },
+    103: { origin: 'Conexão', owner: 'Cliente', retry: 'Continue após a resposta' },
+    202: { origin: 'Processamento', owner: 'Cliente', retry: 'Acompanhe o resultado' },
+    203: { origin: 'Resposta', owner: 'Intermediário', retry: 'Use a resposta recebida' },
+    304: { origin: 'Cache', owner: 'Cliente', retry: 'Use a cópia armazenada' },
+    305: { origin: 'Proxy', owner: 'Cliente', retry: 'Use o proxy indicado' },
+    401: { origin: 'Credenciais', owner: 'Cliente', retry: 'Após autenticar' },
+    403: { origin: 'Permissão', owner: 'Cliente ou serviço', retry: 'Após obter acesso' },
+    408: { origin: 'Conexão', owner: 'Cliente e servidor', retry: 'Após estabilizar a conexão' },
+    409: { origin: 'Recurso', owner: 'Cliente', retry: 'Após resolver o conflito' },
+    410: { origin: 'Endereço', owner: 'Serviço', retry: 'Não se aplica' },
+    413: { origin: 'Solicitação', owner: 'Cliente', retry: 'Após reduzir o conteúdo' },
+    414: { origin: 'Endereço', owner: 'Cliente', retry: 'Após corrigir a URL' },
+    417: { origin: 'Cabeçalho Expect', owner: 'Cliente', retry: 'Após ajustar a solicitação' },
+    421: { origin: 'Conexão', owner: 'Cliente e servidor', retry: 'Em uma nova conexão' },
+    425: { origin: 'Conexão segura', owner: 'Cliente', retry: 'Após estabelecer a conexão' },
+    429: { origin: 'Limite de acesso', owner: 'Cliente', retry: 'Após aguardar' },
+    431: { origin: 'Cabeçalhos', owner: 'Cliente', retry: 'Após reduzir os cabeçalhos' },
+    500: { origin: 'Servidor', owner: 'Equipe do serviço', retry: 'Após investigar a falha' },
+    501: { origin: 'Recurso do servidor', owner: 'Equipe do serviço', retry: 'Após adicionar suporte' },
+    502: { origin: 'Servidor intermediário', owner: 'Equipe do serviço', retry: 'Após normalizar a origem' },
+    503: { origin: 'Disponibilidade', owner: 'Equipe do serviço', retry: 'Após restabelecer o serviço' },
+    504: { origin: 'Tempo de resposta', owner: 'Equipe do serviço', retry: 'Após normalizar a origem' },
+    511: { origin: 'Acesso à rede', owner: 'Cliente', retry: 'Após autenticar na rede' },
+    599: { origin: 'Conexão', owner: 'Cliente e serviço', retry: 'Após verificar a conexão' },
+    521: { origin: 'Servidor de origem', owner: 'Equipe do serviço', retry: 'Após reativar a origem' },
+    522: { origin: 'Conexão com a origem', owner: 'Equipe do serviço', retry: 'Após estabilizar a conexão' },
+    523: { origin: 'Endereço da origem', owner: 'Equipe do serviço', retry: 'Após corrigir o DNS' },
+    525: { origin: 'Conexão TLS', owner: 'Equipe do serviço', retry: 'Após corrigir o TLS' },
+    530: { origin: 'Hostname ou DNS', owner: 'Equipe do serviço', retry: 'Após corrigir o DNS' },
+  }
+
+  if (specificProfiles[status.code]) return specificProfiles[status.code]
+
+  if (status.category === 'Informational') {
+    return { origin: 'Comunicação', owner: 'Cliente', retry: 'Aguarde a próxima resposta' }
+  }
+  if (status.category === 'Success') {
+    return { origin: 'Operação', owner: 'Servidor', retry: 'Não necessária' }
+  }
+  if (status.category === 'Redirection') {
+    return { origin: 'Endereço', owner: 'Cliente', retry: 'Acesse o novo endereço' }
+  }
+  if (status.category === 'Client Error') {
+    return { origin: 'Requisição', owner: 'Cliente', retry: 'Após corrigir' }
+  }
+  return { origin: 'Servidor', owner: 'Equipe do serviço', retry: 'Após normalizar o serviço' }
 }
 
 const rfc9110Statuses = new Set([
@@ -97,6 +174,8 @@ export default function StatusPage() {
   const sourceUrl = isRfcStatus
     ? `https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Reference/Status/${status.code}`
     : 'https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Reference/Status'
+  const statusProfile = getStatusProfile(status)
+  const causePalettes = getDistinctCausePalettes(status.commonCauses)
 
   return (
     <div className="min-h-screen bg-[repeating-linear-gradient(135deg,#f5f7fa_0px,#f5f7fa_18px,#ffffff_18px,#ffffff_36px)] text-[#17263b]">
@@ -120,7 +199,7 @@ export default function StatusPage() {
       <main className="relative z-10 mx-auto -mt-5 max-w-6xl rounded-t-3xl bg-white shadow-[0_16px_60px_rgba(18,62,121,0.08)]">
 
         <header className="px-4 pb-4 pt-4 sm:px-8 lg:relative lg:h-28">
-          <Link className="relative z-20 inline-flex items-center gap-1.5 justify-self-start text-xs font-semibold text-[#123e79] transition hover:text-[#0b63b6]" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} to="/">
+          <Link className="relative z-20 inline-flex items-center gap-1.5 justify-self-start text-xs font-semibold text-[#123e79] transition hover:text-[#0b63b6]" to="/">
             <FiArrowLeft aria-hidden="true" className="size-4 text-[#123e79]" />
             Voltar para todos os status
           </Link>
@@ -131,10 +210,32 @@ export default function StatusPage() {
 
         <div className="px-4 pb-10 sm:px-8 sm:pb-14">
           <section aria-label={`${status.code} ${status.name}`} className="grid min-w-0 items-start gap-6 md:grid-cols-2 md:gap-8">
-            <figure className="w-full min-w-0 rounded-3xl border border-[#dce6f3] bg-white p-3 shadow-[0_14px_36px_rgba(18,62,121,0.10)] sm:p-4">
-              <CardsPokemon key={status.code} alt={status.mediaDescription} media={status.media} mediaType={status.mediaType} />
-              <figcaption className="px-1 pt-2 text-sm text-[#55708f]">{status.mediaDescription}</figcaption>
-            </figure>
+            <div className="min-w-0 space-y-4">
+              <figure className="w-full min-w-0 rounded-3xl border border-[#dce6f3] bg-white p-3 shadow-[0_14px_36px_rgba(18,62,121,0.10)] sm:p-4">
+                <CardsPokemon key={status.code} alt={status.mediaDescription} media={status.media} mediaType={status.mediaType} />
+                <figcaption className="px-1 pt-2 text-sm text-[#55708f]">{status.mediaDescription}</figcaption>
+              </figure>
+
+              <section aria-labelledby="status-profile-title" className="rounded-xl border border-[#cfe2f8] bg-white px-4 py-3 shadow-[0_8px_24px_rgba(18,62,121,0.07)] sm:px-5">
+                <h2 id="status-profile-title" className="mb-2 flex items-center gap-2.5 text-sm font-bold uppercase tracking-wide text-[#1769b0]">
+                  <FiFileText aria-hidden="true" className="size-5 shrink-0" />
+                  Perfil do status
+                </h2>
+                <ul className="divide-y divide-[#dce6f3]">
+                  {[
+                    { label: 'Origem', value: statusProfile.origin, icon: FiGlobe },
+                    { label: 'Quem pode agir', value: statusProfile.owner, icon: FiUsers },
+                    { label: 'Nova tentativa', value: statusProfile.retry, icon: FiRefreshCw },
+                  ].map(({ label, value, icon: Icon }) => (
+                    <li className="flex min-h-10 items-center gap-2.5 py-1.5 text-sm text-[#123e79]" key={label}>
+                      <Icon aria-hidden="true" className="size-4 shrink-0 text-[#1680e8]" />
+                      <span>{label}</span>
+                      <span className="ml-auto max-w-[58%] text-right font-semibold text-[#1769b0]">{value}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            </div>
 
             <div className="min-w-0 pt-1">
               <p className="mb-3 text-base font-medium" style={{ color: statusPalette.color }}>{status.categoryRange} · {status.categoryLabel}</p>
@@ -165,7 +266,7 @@ export default function StatusPage() {
                 <SectionHeading id="causes-title">Causas comuns</SectionHeading>
                 <ul className="flex flex-wrap gap-2">
                   {status.commonCauses.map((cause, index) => {
-                    const causePalette = getCausePalette(cause, index)
+                    const causePalette = causePalettes[index]
                     return (
                       <li className="rounded-[3px] px-3 py-2 text-sm font-medium leading-5 shadow-sm" key={cause} style={{ backgroundColor: causePalette.background, border: `1px solid ${causePalette.border}`, color: causePalette.foreground ?? causePalette.color }}>
                         {cause}

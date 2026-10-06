@@ -1,22 +1,40 @@
-import { useLayoutEffect } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router'
 import HomePage from '../pages/Home'
 import StatusPage from '../pages/Status'
 
+const HOME_SCROLL_STORAGE_KEY = 'httpmon-home-scroll-position'
+
 function ScrollToTop() {
   const { pathname, hash } = useLocation()
+  const previousPathname = useRef(pathname)
 
   useLayoutEffect(() => {
+    window.history.scrollRestoration = 'manual'
+
     if (hash) {
       const target = document.getElementById(decodeURIComponent(hash.slice(1)))
 
       if (target) {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        previousPathname.current = pathname
         return
       }
     }
 
-    window.scrollTo(0, 0)
+    let restoreFrame = 0
+    if (pathname === '/' && previousPathname.current.startsWith('/status/')) {
+      const savedPosition = Number(sessionStorage.getItem(HOME_SCROLL_STORAGE_KEY))
+      restoreFrame = window.requestAnimationFrame(() => {
+        window.scrollTo(0, Number.isFinite(savedPosition) ? savedPosition : 0)
+      })
+    } else {
+      window.scrollTo(0, 0)
+    }
+
+    previousPathname.current = pathname
+
+    return () => window.cancelAnimationFrame(restoreFrame)
   }, [pathname, hash])
 
   return null

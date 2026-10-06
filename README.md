@@ -1,166 +1,252 @@
-<h1 align="center">HTTPmon</h1>
+<div align="center">
 
-<hr />
+# HTTPmon
 
-<p align="center">
-  Explore os códigos de status HTTP com exemplos práticos e cenas de Pokémon.
-</p>
+### Aprenda códigos de status HTTP através do universo Pokémon.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white" alt="React 19" />
-  <img src="https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white" alt="TypeScript 6" />
-  <img src="https://img.shields.io/badge/React_Router-8-CA4245?logo=reactrouter&logoColor=white" alt="React Router 8" />
-  <img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind CSS 4" />
-  <img src="https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white" alt="Vite 8" />
-</p>
+Uma experiência visual e interativa para explorar códigos HTTP, entender seus significados e aprender através de exemplos práticos e cenas de Pokémon.
 
-<p align="center">
-  <a href="#prévia-do-projeto">Ver prévia</a> ·
-  <a href="#executar-localmente">Executar localmente</a>
-</p>
+<br>
+
+<a href="https://httpmon.vercel.app/">
+  <strong>🌐 Acessar o HTTPmon</strong>
+</a>
+
+<br><br>
+
+<img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white" alt="React 19" />
+<img src="https://img.shields.io/badge/TypeScript-6-3178C6?logo=typescript&logoColor=white" alt="TypeScript 6" />
+<img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind CSS 4" />
+<img src="https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white" alt="Vite 8" />
+
+</div>
 
 ---
 
-## Prévia do projeto
+## 🖥️ Demonstração
 
 <table>
   <tr>
-    <th align="center">Página inicial</th>
-    <th align="center">Página do status 404</th>
-  </tr>
-  <tr>
     <td width="50%">
-      <img src="docs/images/home.png" alt="Home do HTTPmon com instrução de uso e cards de status HTTP da categoria 1xx" width="100%" />
+      <img src="docs/images/home.png" alt="Página inicial do HTTPmon" width="100%" />
     </td>
     <td width="50%">
-      <img src="docs/images/status-404.png" alt="Detalhe do status 404 Not Found com animação, explicação, significado e exemplo HTTP" width="100%" />
+      <img src="docs/images/status-404.png" alt="Página do status HTTP 404 Not Found" width="100%" />
     </td>
   </tr>
 </table>
 
 ---
 
-## Visão geral
+## 📖 Sobre o projeto
 
-O HTTPmon transforma uma lista de códigos HTTP em uma experiência visual e navegável. Na página inicial, os status ficam agrupados por categoria. Ao selecionar um card, a aplicação abre uma página com o significado do código, um exemplo prático, causas comuns, status relacionados e uma animação que ajuda a memorizar a ideia.
+O **HTTPmon** é uma aplicação web criada para tornar o aprendizado de códigos de status HTTP mais visual, intuitivo e divertido.
 
-O projeto foi criado para apoiar o aprendizado de HTTP e praticar a construção de uma aplicação React organizada por rotas e dados. Os exemplos usam situações simples, como consultar um recurso que não existe e receber `404 Not Found`.
+Em vez de apresentar apenas definições, cada código é associado a uma cena do universo Pokémon que representa a situação daquele status. Ao acessar um código, é possível consultar seu significado, exemplos de requisição e resposta, causas comuns e outros status relacionados.
 
-### O que você encontra
+O projeto nasceu como uma forma de unir desenvolvimento front-end com um conceito fundamental da web: a comunicação através do protocolo HTTP.
 
-- Status agrupados em `1xx`, `2xx`, `3xx`, `4xx` e `5xx`.
-- Uma página de detalhes compartilhada entre os códigos, preenchida conforme a rota acessada.
-- Explicações em linguagem direta, exemplos de requisição e resposta e causas comuns.
-- Links para status relacionados e navegação de volta à lista.
-- Animações de Pokémon com uma explicação da relação entre a cena e o status.
-- Interface adaptável a telas grandes e pequenas.
+---
 
-## Categorias de status
+## ✨ Funcionalidades
 
-| Faixa | Categoria | Em poucas palavras |
-| --- | --- | --- |
-| `1xx` | Informativo | A solicitação foi recebida e o processamento continua. |
-| `2xx` | Sucesso | A solicitação foi recebida, entendida e atendida. |
-| `3xx` | Redirecionamento | É necessária outra ação para concluir a solicitação, geralmente acessar outra URL. |
-| `4xx` | Erro do cliente | Há um problema na solicitação ou nas condições para atendê-la. |
-| `5xx` | Erro do servidor | O servidor encontrou uma falha ao tentar atender a solicitação. |
+- Consulta de códigos de status HTTP das categorias `1xx` a `5xx`.
+- Página dedicada para cada código.
+- Explicações em linguagem simples e direta.
+- Exemplos de requisições e respostas HTTP.
+- Principais causas relacionadas a cada status.
+- Navegação entre códigos relacionados.
+- Associação de cada status a uma cena do universo Pokémon.
+- Página personalizada para códigos não cadastrados.
+- Interface responsiva para diferentes tamanhos de tela.
 
-O significado exato depende do código. As páginas individuais apresentam as diferenças e os exemplos correspondentes.
+---
 
-## Rotas e navegação
+## 🛠️ Tecnologias
 
-| Rota | Conteúdo |
+| Tecnologia | Aplicação |
 | --- | --- |
-| `/` | Página inicial, com os status agrupados por categoria. |
-| `/status/:code` | Detalhes do código informado, por exemplo `/status/404`. |
-| Qualquer outra rota | Página de código não encontrado. |
+| **React** | Construção dos componentes e da interface da aplicação. |
+| **TypeScript** | Tipagem dos dados, propriedades e componentes. |
+| **React Router** | Navegação entre a página inicial, páginas de status e página de erro. |
+| **Tailwind CSS** | Estilização e responsividade da interface. |
+| **Vite** | Ambiente de desenvolvimento e geração do build da aplicação. |
+| **React Icons** | Ícones utilizados na interface. |
+| **Oxlint** | Análise estática e padronização do código. |
 
-Todos os códigos usam o mesmo componente de página. A rota fornece o código, e a aplicação procura os dados correspondentes no catálogo local. Assim, o conteúdo muda sem criar uma página separada para cada status.
+---
 
-```mermaid
-flowchart LR
-    A[Home e categorias] --> B[Seleciona um card]
-    B --> C[URL /status/:code]
-    C --> D[Busca o código no catálogo]
-    D --> E[Página de detalhes]
-    D --> F[Não encontrado]
-```
-
-## Tecnologias
-
-| Tecnologia | Uso no projeto |
-| --- | --- |
-| React | Componentes e interface. |
-| TypeScript | Tipos para os dados e componentes. |
-| React Router | Rotas da home, das páginas de status e de erro. |
-| Tailwind CSS | Estilos e comportamento responsivo. |
-| Vite | Servidor de desenvolvimento e build. |
-| React Icons | Ícones da interface. |
-
-## Executar localmente
+## 🚀 Executando localmente
 
 ### Pré-requisitos
 
-- Node.js instalado.
-- npm, incluído com Node.js.
+Antes de começar, tenha instalado:
 
-Na pasta do projeto, instale as dependências e inicie o servidor:
+- [Node.js](https://nodejs.org/)
+- Git
+
+### Clone o repositório
+
+```bash
+git clone https://github.com/EnzoNukui/HTTPmon.git
+```
+
+### Acesse a pasta do projeto
+
+```bash
+cd HTTPmon
+```
+
+### Instale as dependências
 
 ```bash
 npm install
+```
+
+### Inicie o servidor de desenvolvimento
+
+```bash
 npm run dev
 ```
 
-O Vite mostrará no terminal o endereço local da aplicação. Abra esse endereço no navegador. Para testar um status diretamente, acrescente `/status/` e o código à URL local, como em `/status/404`.
+O Vite exibirá no terminal o endereço local da aplicação.
+
+Para acessar diretamente um código específico, utilize uma rota como:
+
+```text
+/status/404
+```
 
 ### Comandos disponíveis
 
 | Comando | Descrição |
 | --- | --- |
 | `npm run dev` | Inicia o servidor de desenvolvimento. |
-| `npm run build` | Verifica os tipos e cria o build de produção em `dist/`. |
-| `npm run preview` | Serve localmente o build de produção. |
-| `npm run lint` | Verifica o código com Oxlint. |
+| `npm run build` | Verifica os tipos e gera o build de produção em `dist/`. |
+| `npm run preview` | Executa localmente o build de produção. |
+| `npm run lint` | Analisa o código com Oxlint. |
 
-## Estrutura do projeto
+---
+
+## 🧩 Como funciona
+
+O HTTPmon utiliza uma página de status reutilizável para todos os códigos disponíveis.
+
+Ao selecionar um código na página inicial, a aplicação navega para uma rota dinâmica no formato:
+
+```text
+/status/:code
+```
+
+Por exemplo:
+
+```text
+/status/404
+```
+
+O código presente na URL é utilizado para localizar as informações correspondentes no catálogo local da aplicação. A página então é preenchida dinamicamente com os dados daquele status.
+
+Dessa forma, não é necessário criar uma página diferente manualmente para cada código HTTP.
+
+```mermaid
+flowchart LR
+    A[Home] --> B[Seleciona um status]
+    B --> C["/status/:code"]
+    C --> D[Consulta o catálogo]
+    D --> E[Página do status]
+    D --> F[Código não encontrado]
+```
+
+### Principais rotas
+
+| Rota | Conteúdo |
+| --- | --- |
+| `/` | Página inicial com os códigos agrupados por categoria. |
+| `/status/:code` | Exibe os detalhes do código informado. |
+| Qualquer outra rota | Página de código não encontrado. |
+
+---
+
+## 📁 Estrutura do projeto
 
 ```text
 src/
-├── assets/images/       # Logo do HTTPmon
+├── assets/
+│   └── images/          # Imagens e identidade visual do HTTPmon
+│
 ├── components/
-│   ├── Cards/           # Cards da página inicial
-│   ├── CardsPokemon/    # Exibição da mídia do status
+│   ├── Cards/           # Cards dos status exibidos na página inicial
+│   ├── CardsPokemon/    # Exibição das mídias relacionadas aos status
 │   └── Footer/          # Rodapé e navegação auxiliar
+│
 ├── pages/
-│   ├── Error/           # Rota não encontrada
-│   ├── Home/            # Lista de códigos por categoria
-│   └── Status/          # Página reutilizável de detalhes
-├── routes/              # Definição das rotas
-├── services/            # Catálogo local dos status HTTP
-├── types/               # Tipos compartilhados
+│   ├── Error/           # Página exibida para rotas ou códigos inexistentes
+│   ├── Home/            # Página inicial com os códigos HTTP
+│   └── Status/          # Página reutilizável de detalhes dos status
+│
+├── routes/              # Configuração das rotas da aplicação
+├── services/            # Catálogo e informações dos códigos HTTP
+├── types/               # Tipos compartilhados da aplicação
+│
 ├── App.tsx
 └── globals.css          # Estilos globais
 
-docs/images/             # Capturas usadas neste README
+docs/
+└── images/              # Capturas utilizadas neste README
 ```
 
-Os dados de cada status ficam em `src/services/httpStatuses.ts`. O tipo compartilhado em `src/types/` mantém a estrutura dos dados consistente entre os cards e as páginas de detalhes.
+As informações de cada código estão centralizadas em:
 
-## Mídias e escopo
+```text
+src/services/httpStatuses.ts
+```
 
-As animações são carregadas de URLs do Tenor e precisam de conexão com a internet para aparecer. A aplicação não consulta a API do Tenor em cada acesso; ela usa as URLs cadastradas junto aos dados dos status.
+Isso permite que os componentes sejam reutilizados e preenchidos dinamicamente de acordo com o status acessado.
 
-O catálogo inclui códigos HTTP e alguns códigos usados por serviços específicos. Quando um número não está cadastrado, a aplicação apresenta a página de código não encontrado.
+---
 
-## Créditos
+## 🧠 Aprendizados
 
-O HTTPmon é um projeto educacional independente. Pokémon e seus personagens são propriedade de seus respectivos titulares. As animações são disponibilizadas pelo Tenor e usadas como referência visual para explicar os status HTTP.
+Durante o desenvolvimento do HTTPmon, foram aplicados e aprofundados conceitos como:
 
-## Autor
+- componentização de interfaces utilizando React;
+- tipagem de dados e componentes com TypeScript;
+- criação e utilização de rotas dinâmicas com React Router;
+- reutilização de componentes a partir de dados estruturados;
+- organização e centralização de informações em um catálogo local;
+- desenvolvimento de layouts responsivos com Tailwind CSS;
+- tratamento de rotas e códigos inexistentes;
+- organização da estrutura de uma aplicação React;
+- funcionamento e significado dos principais códigos de status HTTP.
+
+Além da parte técnica, o projeto também exigiu a criação de uma relação visual entre cada código HTTP e uma situação do universo Pokémon, buscando facilitar a memorização e tornar o conteúdo mais acessível.
+
+---
+
+## 🎬 Mídias e escopo
+
+As animações utilizadas no projeto são carregadas a partir de URLs do **Tenor** e, portanto, precisam de conexão com a internet para serem exibidas.
+
+A aplicação não realiza uma consulta à API do Tenor a cada acesso. As URLs das mídias ficam cadastradas junto às informações de cada status HTTP.
+
+O catálogo contém códigos HTTP padronizados e também alguns códigos utilizados por serviços e plataformas específicas.
+
+Caso o usuário tente acessar um código que não esteja cadastrado, a aplicação apresenta uma página personalizada informando que aquele código não foi encontrado.
+
+---
+
+## ⚠️ Aviso
+
+O HTTPmon é um projeto educacional independente e não possui vínculo oficial com Pokémon, The Pokémon Company, Nintendo, Game Freak ou Creatures Inc.
+
+Pokémon e seus personagens são propriedade de seus respectivos titulares.
+
+As animações utilizadas no projeto são disponibilizadas através do Tenor e são utilizadas apenas como recurso visual e educacional para representar os códigos de status HTTP.
+
+---
+
+## 👨‍💻 Autor
 
 Desenvolvido por **Enzo Nukui**.
 
-- GitHub: [@EnzoNukui](https://github.com/EnzoNukui)
-- LinkedIn: [linkedin.com/in/enzo-nukui](https://www.linkedin.com/in/enzo-nukui/)
-
-
+[GitHub](https://github.com/EnzoNukui) • [LinkedIn](https://www.linkedin.com/in/enzo-nukui/)

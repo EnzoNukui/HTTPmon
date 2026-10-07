@@ -47,7 +47,7 @@ export default function CardsPokemon({ media, alt, mediaType, layout = 'detail' 
 
   return (
     <div
-      className={`relative flex ${aspectClass} w-full items-center justify-center overflow-hidden rounded-2xl bg-slate-100`}
+      className={`relative flex ${aspectClass} w-full items-center justify-center overflow-hidden rounded-2xl bg-slate-100 dark:bg-[#3a3a3a]`}
       ref={mediaRef}
     >
       {src && mediaType === 'video' && (

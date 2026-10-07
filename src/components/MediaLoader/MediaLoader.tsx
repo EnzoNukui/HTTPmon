@@ -7,7 +7,7 @@ export default function MediaLoader({ message, isLoading = true }: MediaLoaderPr
   return (
     <div
       aria-live="polite"
-      className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#123e79] px-4 text-center text-white"
+      className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#123e79] px-4 text-center text-white dark:bg-[#303030]"
       role="status"
     >
       {isLoading ? (

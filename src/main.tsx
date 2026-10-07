@@ -4,6 +4,8 @@ import { BrowserRouter } from 'react-router'
 import './globals.css'
 import App from './App.tsx'
 
+document.documentElement.classList.toggle('dark', window.localStorage.getItem('httpmon-theme') === 'dark')
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>

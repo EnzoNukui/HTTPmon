@@ -129,7 +129,7 @@ const rfc9110Statuses = new Set([
 
 function SectionHeading({ id, children, accent = true }: { id?: string; children: ReactNode; accent?: boolean }) {
   return (
-    <h2 id={id} className="mb-4 flex items-center gap-3 text-sm font-bold uppercase tracking-[0.14em] text-[#123e79]">
+    <h2 id={id} className="mb-4 flex items-center gap-3 text-sm font-bold uppercase tracking-[0.14em] text-[#123e79] dark:text-[#b8d9ff]">
       {accent && <span aria-hidden="true" className="h-6 w-1 shrink-0 rounded-full bg-[#ed4b59]" />}
       {children}
     </h2>
@@ -143,11 +143,11 @@ export default function StatusPage() {
 
   if (!status) {
     return (
-      <div className="flex min-h-screen flex-col bg-[#f5f8fc] text-[#1c2b43]">
+      <div className="flex min-h-screen flex-col bg-[#f5f8fc] text-[#1c2b43] dark:bg-[#202020] dark:text-[#eeeeee]">
         <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col items-center justify-center px-6 py-20 text-center">
           <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-[#e84855]">Status não cadastrado</p>
-          <h1 className="text-4xl font-black tracking-tight text-[#123e79] sm:text-5xl">Não encontramos esse código</h1>
-          <p className="mt-4 max-w-xl text-base leading-7 text-black">Ainda não temos esse código por aqui.</p>
+          <h1 className="text-4xl font-black tracking-tight text-[#123e79] dark:text-[#eeeeee] sm:text-5xl">Não encontramos esse código</h1>
+          <p className="mt-4 max-w-xl text-base leading-7 text-black dark:text-[#cecece]">Ainda não temos esse código por aqui.</p>
           <Link className="mt-8 rounded-full bg-[#1769b0] px-6 py-3 font-semibold text-white transition hover:bg-[#12548f] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1769b0]" to="/">
             Voltar ao início
           </Link>
@@ -178,7 +178,7 @@ export default function StatusPage() {
   const causePalettes = getDistinctCausePalettes(status.commonCauses)
 
   return (
-    <div className="min-h-screen bg-[repeating-linear-gradient(135deg,#f5f7fa_0px,#f5f7fa_18px,#ffffff_18px,#ffffff_36px)] text-[#17263b]">
+    <div className="min-h-screen bg-[repeating-linear-gradient(135deg,#f5f7fa_0px,#f5f7fa_18px,#ffffff_18px,#ffffff_36px)] text-[#17263b] dark:bg-[repeating-linear-gradient(135deg,#1c1c1c_0px,#1c1c1c_18px,#242424_18px,#242424_36px)] dark:text-[#eeeeee]">
       <nav aria-label="Navegação entre status" className="bg-[#123e79] text-white">
         <div className="mx-auto grid min-h-24 max-w-6xl grid-cols-2">
           {previousStatus ? (
@@ -196,41 +196,41 @@ export default function StatusPage() {
         </div>
       </nav>
 
-      <main className="relative z-10 mx-auto -mt-5 max-w-6xl rounded-t-3xl bg-white shadow-[0_16px_60px_rgba(18,62,121,0.08)]">
+      <main className="relative z-10 mx-auto -mt-5 max-w-6xl rounded-t-3xl bg-white shadow-[0_16px_60px_rgba(18,62,121,0.08)] dark:bg-[#292929]">
 
         <header className="px-4 pb-4 pt-4 sm:px-8 lg:relative lg:h-28">
-          <Link className="relative z-20 inline-flex items-center gap-1.5 justify-self-start text-xs font-semibold text-[#123e79] transition hover:text-[#0b63b6]" to="/">
+          <Link className="relative z-20 inline-flex items-center gap-1.5 justify-self-start text-xs font-semibold text-[#123e79] transition hover:text-[#0b63b6] dark:text-[#dddddd] dark:hover:text-white" to="/">
             <FiArrowLeft aria-hidden="true" className="size-4 text-[#123e79]" />
             Voltar para todos os status
           </Link>
-          <h1 className={`mt-1 flex flex-wrap items-baseline justify-center gap-x-3 break-words text-center text-3xl font-semibold tracking-tight text-[#17263b] lg:absolute lg:inset-x-0 lg:top-5 lg:mt-0 lg:px-32 ${status.name.length > 22 ? 'lg:text-4xl' : 'lg:text-5xl'}`}>
-            <span>{status.name}</span><span className="text-slate-500">Nº <span style={{ color: statusPalette.color }}>{status.code}</span></span>
+          <h1 className={`mt-1 flex flex-wrap items-baseline justify-center gap-x-3 break-words text-center text-3xl font-semibold tracking-tight text-[#17263b] dark:text-[#f1f1f1] lg:absolute lg:inset-x-0 lg:top-5 lg:mt-0 lg:px-32 ${status.name.length > 22 ? 'lg:text-4xl' : 'lg:text-5xl'}`}>
+            <span>{status.name}</span><span className="text-slate-500 dark:text-[#bdbdbd]">Nº <span style={{ color: statusPalette.color }}>{status.code}</span></span>
           </h1>
         </header>
 
         <div className="px-4 pb-10 sm:px-8 sm:pb-14">
           <section aria-label={`${status.code} ${status.name}`} className="grid min-w-0 items-start gap-6 md:grid-cols-2 md:gap-8">
             <div className="min-w-0 space-y-4">
-              <figure className="w-full min-w-0 rounded-3xl border border-[#dce6f3] bg-white p-3 shadow-[0_14px_36px_rgba(18,62,121,0.10)] sm:p-4">
+              <figure className="w-full min-w-0 rounded-3xl border border-[#dce6f3] bg-white p-3 shadow-[0_14px_36px_rgba(18,62,121,0.10)] dark:border-[#555555] dark:bg-[#303030] sm:p-4">
                 <CardsPokemon key={status.code} alt={status.mediaDescription} media={status.media} mediaType={status.mediaType} />
-                <figcaption className="px-1 pt-2 text-sm text-[#55708f]">{status.mediaDescription}</figcaption>
+                <figcaption className="px-1 pt-2 text-sm text-[#55708f] dark:text-[#c9c9c9]">{status.mediaDescription}</figcaption>
               </figure>
 
-              <section aria-labelledby="status-profile-title" className="rounded-xl border border-[#cfe2f8] bg-white px-4 py-3 shadow-[0_8px_24px_rgba(18,62,121,0.07)] sm:px-5">
-                <h2 id="status-profile-title" className="mb-2 flex items-center gap-2.5 text-sm font-bold uppercase tracking-wide text-[#1769b0]">
+              <section aria-labelledby="status-profile-title" className="rounded-xl border border-[#cfe2f8] bg-white px-4 py-3 shadow-[0_8px_24px_rgba(18,62,121,0.07)] dark:border-[#555555] dark:bg-[#303030] sm:px-5">
+                <h2 id="status-profile-title" className="mb-2 flex items-center gap-2.5 text-sm font-bold uppercase tracking-wide text-[#1769b0] dark:text-[#e0e0e0]">
                   <FiFileText aria-hidden="true" className="size-5 shrink-0" />
                   Perfil do status
                 </h2>
-                <ul className="divide-y divide-[#dce6f3]">
+                <ul className="divide-y divide-[#dce6f3] dark:divide-[#505050]">
                   {[
                     { label: 'Origem', value: statusProfile.origin, icon: FiGlobe },
                     { label: 'Quem pode agir', value: statusProfile.owner, icon: FiUsers },
                     { label: 'Nova tentativa', value: statusProfile.retry, icon: FiRefreshCw },
                   ].map(({ label, value, icon: Icon }) => (
-                    <li className="flex min-h-10 items-center gap-2.5 py-1.5 text-sm text-[#123e79]" key={label}>
-                      <Icon aria-hidden="true" className="size-4 shrink-0 text-[#1680e8]" />
+                    <li className="flex min-h-10 items-center gap-2.5 py-1.5 text-sm text-[#123e79] dark:text-[#dddddd]" key={label}>
+                      <Icon aria-hidden="true" className="size-4 shrink-0 text-[#1680e8] dark:text-[#c8c8c8]" />
                       <span>{label}</span>
-                      <span className="ml-auto max-w-[58%] text-right font-semibold text-[#1769b0]">{value}</span>
+                      <span className="ml-auto max-w-[58%] text-right font-semibold text-[#1769b0] dark:text-[#eeeeee]">{value}</span>
                     </li>
                   ))}
                 </ul>
@@ -239,7 +239,7 @@ export default function StatusPage() {
 
             <div className="min-w-0 pt-1">
               <p className="mb-3 text-base font-medium" style={{ color: statusPalette.color }}>{status.categoryRange} · {status.categoryLabel}</p>
-              <p className="break-words text-lg leading-8 text-black sm:text-xl">{status.description}</p>
+              <p className="break-words text-lg leading-8 text-black dark:text-[#dddddd] sm:text-xl">{status.description}</p>
 
               <section aria-labelledby="meaning-title" className="mt-10 rounded-md bg-[#0872c9] p-5 text-white shadow-[0_12px_30px_rgba(18,62,121,0.16)] sm:mt-14 sm:p-6">
                 <SectionHeading accent={false} id="meaning-title"><span className="text-white">Significado</span></SectionHeading>
@@ -278,10 +278,10 @@ export default function StatusPage() {
             </div>
           </section>
 
-          <section aria-label="Detalhes do status" className="mt-8 grid min-w-0 gap-5 border-t border-[#b8d7f7] pt-5 sm:mt-10 sm:grid-cols-2 sm:gap-6 sm:pt-5">
-            <section className="min-w-0 sm:border-r sm:border-[#b8d7f7] sm:pr-6">
+          <section aria-label="Detalhes do status" className="mt-8 grid min-w-0 gap-5 border-t border-[#b8d7f7] pt-5 dark:border-[#505050] sm:mt-10 sm:grid-cols-2 sm:gap-6 sm:pt-5">
+            <section className="min-w-0 sm:border-r sm:border-[#b8d7f7] sm:pr-6 dark:sm:border-[#505050]">
               <SectionHeading>Por que esse GIF?</SectionHeading>
-              <p className="rounded-md bg-[#eef5ff] px-4 py-3 leading-7 text-black">{status.mediaReason}</p>
+              <p className="rounded-md bg-[#eef5ff] px-4 py-3 leading-7 text-black dark:bg-[#383838] dark:text-[#dddddd]">{status.mediaReason}</p>
             </section>
 
             <section className="min-w-0">
@@ -292,30 +292,30 @@ export default function StatusPage() {
 
           {status.resolutionSteps && <ResolutionGuide steps={status.resolutionSteps} />}
 
-          <section aria-labelledby="references-title" className="mt-4 border-t border-[#b8d7f7] pt-6 sm:mt-5 sm:pt-7">
+          <section aria-labelledby="references-title" className="mt-4 border-t border-[#b8d7f7] pt-6 dark:border-[#505050] sm:mt-5 sm:pt-7">
             <SectionHeading id="references-title">Consulte também</SectionHeading>
             <ul className="space-y-1.5">
               <li>
-                <a className="group flex items-center gap-3 rounded-md bg-[#f2f7fd] px-3 py-2.5 text-[#123e79] transition hover:bg-[#e6f1fc]" href={specificationUrl} rel="noreferrer" target="_blank">
-                  <FiExternalLink aria-hidden="true" className="size-5 shrink-0 text-[#123e79]" />
-                  <span className="min-w-0 flex-1"><span className="block text-sm font-semibold text-[#123e79]">{isRfcStatus ? `RFC ${status.code === 102 || [207, 423, 424].includes(status.code) ? '4918' : status.code === 208 ? '5842' : status.code === 226 ? '3229' : '9110'}` : 'Registro de códigos HTTP · IANA'}</span><span className="block text-xs leading-5 text-black">{isRfcStatus ? `Especificação do status ${status.code} ${status.name}.` : 'Registro oficial dos códigos HTTP.'}</span></span>
-                  <FiArrowRight aria-hidden="true" className="size-4 shrink-0 text-[#123e79] transition group-hover:translate-x-0.5" />
+                <a className="group flex items-center gap-3 rounded-md bg-[#f2f7fd] px-3 py-2.5 text-[#123e79] transition hover:bg-[#e6f1fc] dark:bg-[#373737] dark:text-[#e5e5e5] dark:hover:bg-[#444444]" href={specificationUrl} rel="noreferrer" target="_blank">
+                  <FiExternalLink aria-hidden="true" className="size-5 shrink-0 text-[#123e79] dark:text-[#8fc7ff]" />
+                  <span className="min-w-0 flex-1"><span className="block text-sm font-semibold text-[#123e79] dark:text-[#b8d9ff]">{isRfcStatus ? `RFC ${status.code === 102 || [207, 423, 424].includes(status.code) ? '4918' : status.code === 208 ? '5842' : status.code === 226 ? '3229' : '9110'}` : 'Registro de códigos HTTP · IANA'}</span><span className="block text-xs leading-5 text-black dark:text-slate-300">{isRfcStatus ? `Especificação do status ${status.code} ${status.name}.` : 'Registro oficial dos códigos HTTP.'}</span></span>
+                  <FiArrowRight aria-hidden="true" className="size-4 shrink-0 text-[#123e79] transition group-hover:translate-x-0.5 dark:text-[#8fc7ff]" />
                 </a>
               </li>
               {status.code === 100 && (
                 <li>
-                  <a className="group flex items-center gap-3 rounded-md bg-[#f2f7fd] px-3 py-2.5 text-[#123e79] transition hover:bg-[#e6f1fc]" href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Expect" rel="noreferrer" target="_blank">
-                    <FiExternalLink aria-hidden="true" className="size-5 shrink-0 text-[#123e79]" />
-                    <span className="min-w-0 flex-1"><span className="block text-sm font-semibold text-[#123e79]">Cabeçalho Expect</span><span className="block text-xs leading-5 text-black">Usado para aguardar 100 Continue antes de enviar o corpo.</span></span>
-                    <FiArrowRight aria-hidden="true" className="size-4 shrink-0 text-[#123e79] transition group-hover:translate-x-0.5" />
+                <a className="group flex items-center gap-3 rounded-md bg-[#f2f7fd] px-3 py-2.5 text-[#123e79] transition hover:bg-[#e6f1fc] dark:bg-[#373737] dark:text-[#e5e5e5] dark:hover:bg-[#444444]" href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Headers/Expect" rel="noreferrer" target="_blank">
+                    <FiExternalLink aria-hidden="true" className="size-5 shrink-0 text-[#123e79] dark:text-[#8fc7ff]" />
+                    <span className="min-w-0 flex-1"><span className="block text-sm font-semibold text-[#123e79] dark:text-[#b8d9ff]">Cabeçalho Expect</span><span className="block text-xs leading-5 text-black dark:text-slate-300">Usado para aguardar 100 Continue antes de enviar o corpo.</span></span>
+                    <FiArrowRight aria-hidden="true" className="size-4 shrink-0 text-[#123e79] transition group-hover:translate-x-0.5 dark:text-[#8fc7ff]" />
                   </a>
                 </li>
               )}
               <li>
-                <a className="group flex items-center gap-3 rounded-md bg-[#f2f7fd] px-3 py-2.5 text-[#123e79] transition hover:bg-[#e6f1fc]" href={sourceUrl} rel="noreferrer" target="_blank">
-                  <FiExternalLink aria-hidden="true" className="size-5 shrink-0 text-[#123e79]" />
-                  <span className="min-w-0 flex-1"><span className="block text-sm font-semibold text-[#123e79]">{isRfcStatus ? `MDN · HTTP ${status.code} ${status.name}` : 'MDN · Códigos de status HTTP'}</span><span className="block text-xs leading-5 text-black">Documentação e exemplos práticos.</span></span>
-                  <FiArrowRight aria-hidden="true" className="size-4 shrink-0 text-[#123e79] transition group-hover:translate-x-0.5" />
+                <a className="group flex items-center gap-3 rounded-md bg-[#f2f7fd] px-3 py-2.5 text-[#123e79] transition hover:bg-[#e6f1fc] dark:bg-[#373737] dark:text-[#e5e5e5] dark:hover:bg-[#444444]" href={sourceUrl} rel="noreferrer" target="_blank">
+                  <FiExternalLink aria-hidden="true" className="size-5 shrink-0 text-[#123e79] dark:text-[#8fc7ff]" />
+                  <span className="min-w-0 flex-1"><span className="block text-sm font-semibold text-[#123e79] dark:text-[#b8d9ff]">{isRfcStatus ? `MDN · HTTP ${status.code} ${status.name}` : 'MDN · Códigos de status HTTP'}</span><span className="block text-xs leading-5 text-black dark:text-slate-300">Documentação e exemplos práticos.</span></span>
+                  <FiArrowRight aria-hidden="true" className="size-4 shrink-0 text-[#123e79] transition group-hover:translate-x-0.5 dark:text-[#8fc7ff]" />
                 </a>
               </li>
             </ul>

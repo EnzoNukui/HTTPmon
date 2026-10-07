@@ -11,7 +11,7 @@ export default function ResolutionGuide({ steps }: ResolutionGuideProps) {
   if (steps.length === 0) return null
 
   return (
-    <section aria-labelledby="resolution-guide-title" className="relative isolate mt-8 overflow-hidden rounded-2xl bg-[#102f5d] p-5 text-white shadow-[0_14px_36px_rgba(18,62,121,0.16)] sm:mt-10 sm:p-7">
+    <section aria-labelledby="resolution-guide-title" className="relative isolate mt-8 overflow-hidden rounded-2xl bg-[#102f5d] p-5 text-white shadow-[0_14px_36px_rgba(18,62,121,0.16)] dark:bg-[#292929] sm:mt-10 sm:p-7">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 opacity-30 [background-image:repeating-linear-gradient(135deg,transparent_0,transparent_26px,rgba(255,255,255,0.08)_26px,rgba(255,255,255,0.08)_48px)]" />
 
       <div className="mb-5 flex items-center gap-3 sm:mb-6">
@@ -27,7 +27,7 @@ export default function ResolutionGuide({ steps }: ResolutionGuideProps) {
           const StepIcon = stepIcons[index % stepIcons.length]
 
           return (
-            <li className="relative min-w-0 list-none rounded-xl border border-white/15 bg-[#17477f] p-4 shadow-sm sm:p-5" key={`${step.title}-${index}`}>
+            <li className="relative min-w-0 list-none rounded-xl border border-white/15 bg-[#17477f] p-4 shadow-sm dark:bg-[#383838] sm:p-5" key={`${step.title}-${index}`}>
               <div className="mb-4 flex items-center justify-between gap-3">
                 <span className="grid size-10 place-items-center rounded-full bg-[#0872c9] text-lg font-extrabold text-white ring-4 ring-white/10">{index + 1}</span>
                 <StepIcon aria-hidden="true" className="size-6 text-[#a9dcff]" />

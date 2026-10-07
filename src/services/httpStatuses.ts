@@ -567,7 +567,7 @@ const notFound: HttpStatus = {
   description: 'O servidor não encontrou o recurso pedido.',
   meaning:
     'O endereço chegou ao servidor, mas não há um recurso disponível ali. O 404 não diz se ele nunca existiu ou se foi removido.',
-  example: 'GET /pokemon/mewthree HTTP/1.1\nHost: api.exemplo.com\n\nHTTP/1.1 404 Not Found',
+  example: 'Você pediu: GET /pokemon/mewthree\n\nO servidor respondeu: 404 Not Found',
   commonCauses: [
     'URL digitada incorretamente',
     'Rota inexistente na aplicação',
@@ -875,6 +875,34 @@ const resolutionStepsByCode: Partial<Record<number, ResolutionStep[]>> = {
   ],
 }
 
+function getSimpleExample(status: HttpStatus): string {
+  if (status.code === 444) {
+    return 'A conexão foi encerrada sem uma resposta HTTP.'
+  }
+
+  if (status.code === 499) {
+    return 'O cliente encerrou a solicitação antes de receber a resposta.\n\nRegistro: 499 Client Closed Request'
+  }
+
+  if (status.code === 305) {
+    return 'O servidor indicou que este recurso deve ser acessado por um proxy.\n\nResposta: 305 Use Proxy'
+  }
+
+  if (status.code === 505) {
+    return 'Você usou uma versão do HTTP que o servidor não aceita.\n\nResposta: 505 HTTP Version Not Supported'
+  }
+
+  const requestMatch = status.example.match(
+    /\b(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS|PROPFIND|PROPPATCH|LOCK|UNLOCK|CONNECT|TRACE)\s+(\S+)/i,
+  )
+
+  if (!requestMatch) {
+    return `O servidor respondeu: ${status.code} ${status.name}`
+  }
+
+  return `Você pediu: ${requestMatch[1].toUpperCase()} ${requestMatch[2]}\n\nO servidor respondeu: ${status.code} ${status.name}`
+}
+
 export const httpStatuses: HttpStatus[] = [
   ...informationalStatuses,
   ...successfulStatuses,
@@ -884,7 +912,11 @@ export const httpStatuses: HttpStatus[] = [
   notFound,
 ].map((status) => {
   const resolutionSteps = status.resolutionSteps ?? resolutionStepsByCode[status.code]
-  return resolutionSteps ? { ...status, resolutionSteps } : status
+  return {
+    ...status,
+    example: getSimpleExample(status),
+    ...(resolutionSteps ? { resolutionSteps } : {}),
+  }
 }).sort((left, right) => left.code - right.code)
 
 export function getHttpStatus(code: number): HttpStatus | undefined {

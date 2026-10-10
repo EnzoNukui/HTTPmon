@@ -1,13 +1,14 @@
 import { useState } from 'react'
-import { FiCheck, FiCopy, FiMoon, FiSun } from 'react-icons/fi'
+import { FiCheck, FiCopy } from 'react-icons/fi'
 import Cards from '../../components/Cards/Cards'
 import Footer from '../../components/Footer/Footer'
+import StatusSearch from '../../components/StatusSearch/StatusSearch'
+import ThemeToggle from '../../components/ThemeToggle/ThemeToggle'
 import httpmonLogo from '../../assets/images/Logotipo_httpmon_transparente.png'
 import { httpStatuses } from '../../services/httpStatuses'
 
 export default function HomePage() {
   const [copied, setCopied] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(() => window.localStorage.getItem('httpmon-theme') === 'dark')
   const groups = [
     { range: '1xx', title: 'Respostas informativas', label: 'Informational' },
     { range: '2xx', title: 'Respostas bem-sucedidas', label: 'Success' },
@@ -28,27 +29,13 @@ export default function HomePage() {
     window.setTimeout(() => setCopied(false), 1800)
   }
 
-  function toggleTheme() {
-    const next = !isDarkMode
-    setIsDarkMode(next)
-    window.localStorage.setItem('httpmon-theme', next ? 'dark' : 'light')
-    document.documentElement.classList.toggle('dark', next)
-  }
-
   return (
     <div className="flex min-h-screen flex-col bg-[#f5f8fc] text-[#1c2b43] transition-colors duration-200 dark:bg-[#202020] dark:text-[#eeeeee]">
-      <main className="relative mx-auto w-full max-w-6xl flex-1 px-4 pb-12 pt-7 sm:px-8 sm:pb-16 sm:pt-12">
-        <button
-          aria-label={isDarkMode ? 'Ativar tema claro' : 'Ativar tema escuro'}
-          aria-pressed={isDarkMode}
-          className="absolute right-4 top-5 z-10 grid size-12 place-items-center rounded-full border border-[#cfe0f4] bg-white text-[#123e79] shadow-md transition hover:bg-[#eaf3ff] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1769b0] dark:border-[#555555] dark:bg-[#343434] dark:text-[#eeeeee] dark:hover:bg-[#454545] sm:flex sm:h-12 sm:w-auto sm:justify-center sm:gap-2 sm:px-4 sm:right-8 sm:top-8"
-          onClick={toggleTheme}
-          title={isDarkMode ? 'Ativar tema claro' : 'Ativar tema escuro'}
-          type="button"
-        >
-          {isDarkMode ? <FiSun aria-hidden="true" className="size-6" /> : <FiMoon aria-hidden="true" className="size-6" />}
-          <span className="hidden text-sm font-semibold sm:inline">{isDarkMode ? 'Tema claro' : 'Tema escuro'}</span>
-        </button>
+      <main className="relative mx-auto w-full max-w-6xl flex-1 px-4 pb-12 pt-5 sm:px-8 sm:pb-16 sm:pt-8">
+        <div className="mb-3 flex items-center justify-end gap-2">
+          <StatusSearch />
+          <ThemeToggle />
+        </div>
         <header className="text-center">
           <img alt="HTTPmon" className="mx-auto h-auto w-64 sm:w-80" src={httpmonLogo} />
           <p className="mt-5 text-base font-medium text-slate-700 dark:text-[#d0d0d0] sm:text-lg">

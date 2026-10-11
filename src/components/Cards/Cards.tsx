@@ -4,16 +4,17 @@ import CardsPokemon from '../CardsPokemon/CardsPokemon'
 
 type CardsProps = {
   status: HttpStatus
+  loadOrder?: number
 }
 
-export default function Cards({ status }: CardsProps) {
+export default function Cards({ status, loadOrder }: CardsProps) {
   return (
     <Link
       className="group block overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_24px_rgba(18,62,121,0.06)] transition duration-200 hover:-translate-y-1 hover:border-[#9fc7f3] hover:shadow-[0_16px_32px_rgba(18,62,121,0.13)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1769b0] dark:border-[#505050] dark:bg-[#303030] dark:hover:border-[#777777]"
       onClick={() => sessionStorage.setItem('httpmon-home-scroll-position', String(window.scrollY))}
       to={`/status/${status.code}`}
     >
-      <CardsPokemon alt={status.mediaDescription} layout="card" media={status.media} mediaType={status.mediaType} />
+      <CardsPokemon alt={status.mediaDescription} layout="card" loadOrder={loadOrder} media={status.media} mediaType={status.mediaType} />
       <div className="min-w-0 p-4 sm:p-5">
         <div className="flex min-w-0 items-start justify-between gap-2 sm:gap-3">
           <span className="text-3xl font-black leading-none tracking-tight text-[#1769b0]">{status.code}</span>

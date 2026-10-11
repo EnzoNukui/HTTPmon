@@ -7,6 +7,8 @@ import ThemeToggle from '../../components/ThemeToggle/ThemeToggle'
 import httpmonLogo from '../../assets/images/Logotipo_httpmon_transparente.png'
 import { httpStatuses } from '../../services/httpStatuses'
 
+const statusLoadOrder = new Map(httpStatuses.map((status, index) => [status.code, index]))
+
 export default function HomePage() {
   const [copied, setCopied] = useState(false)
   const groups = [
@@ -77,7 +79,7 @@ export default function HomePage() {
               <p className="text-sm text-slate-500 dark:text-[#bdbdbd]">{group.statuses.length} status</p>
             </div>
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {group.statuses.map((status) => <Cards key={status.code} status={status} />)}
+              {group.statuses.map((status) => <Cards key={status.code} loadOrder={statusLoadOrder.get(status.code)} status={status} />)}
             </div>
           </section>
         ))}

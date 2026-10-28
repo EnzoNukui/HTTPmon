@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { FiSearch } from 'react-icons/fi'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { httpStatuses } from '../../services/httpStatuses'
 
 function normalize(value: string) {
@@ -13,17 +13,32 @@ function normalize(value: string) {
 export default function StatusSearch() {
   const [query, setQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const navigate = useNavigate()
   const normalizedQuery = normalize(query.trim())
+  const queryTerms = normalizedQuery.split(/\s+/).filter(Boolean)
   const matches = normalizedQuery
     ? httpStatuses.filter((status) => (
-      String(status.code).includes(normalizedQuery)
-      || normalize(status.name).includes(normalizedQuery)
-      || normalize(status.categoryLabel).includes(normalizedQuery)
+      queryTerms.every((term) => normalize(
+        `${status.code} ${status.name} ${status.categoryLabel} ${status.categoryRange}`,
+      ).includes(term))
     )).slice(0, 6)
     : []
 
+  function openStatus(code: number) {
+    sessionStorage.setItem('httpmon-home-scroll-position', String(window.scrollY))
+    setQuery('')
+    setIsOpen(false)
+    navigate(`/status/${code}`)
+  }
+
   return (
-    <div className="relative w-40 sm:w-48">
+    <div
+      className="relative w-40 sm:w-48"
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setIsOpen(false)
+      }}
+    >
       <label className="sr-only" htmlFor="status-search">Buscar status por código ou nome</label>
       <div className="flex h-12 items-center rounded-full border border-[#cfe0f4] bg-white text-[#123e79] shadow-md transition focus-within:border-[#1769b0] focus-within:ring-2 focus-within:ring-[#1769b0]/20 dark:border-[#555555] dark:bg-[#343434] dark:text-[#eeeeee] dark:focus-within:border-[#b8d9ff] dark:focus-within:ring-[#b8d9ff]/20">
         <FiSearch aria-hidden="true" className="ml-4 size-4 shrink-0" />
@@ -31,20 +46,41 @@ export default function StatusSearch() {
           autoComplete="off"
           className="min-w-0 flex-1 bg-transparent px-2 text-sm text-[#1c2b43] outline-none placeholder:text-slate-500 dark:text-[#eeeeee] dark:placeholder:text-[#c0c0c0]"
           id="status-search"
-          onBlur={() => window.setTimeout(() => setIsOpen(false), 120)}
           onChange={(event) => {
             setQuery(event.target.value)
+            setActiveIndex(0)
             setIsOpen(true)
           }}
           onFocus={() => setIsOpen(true)}
           onKeyDown={(event) => {
-            if (event.key === 'Escape') setIsOpen(false)
+            if (event.key === 'Escape') {
+              setIsOpen(false)
+              return
+            }
+
+            if (event.key === 'ArrowDown' && matches.length > 0) {
+              event.preventDefault()
+              setIsOpen(true)
+              setActiveIndex((index) => (index + 1) % matches.length)
+            }
+
+            if (event.key === 'ArrowUp' && matches.length > 0) {
+              event.preventDefault()
+              setIsOpen(true)
+              setActiveIndex((index) => (index - 1 + matches.length) % matches.length)
+            }
+
+            if (event.key === 'Enter' && isOpen && matches.length > 0) {
+              event.preventDefault()
+              openStatus(matches[activeIndex]?.code ?? matches[0].code)
+            }
           }}
           placeholder="Buscar status..."
           role="combobox"
           aria-expanded={isOpen && Boolean(normalizedQuery)}
           aria-controls="status-search-results"
           aria-autocomplete="list"
+          aria-activedescendant={isOpen && normalizedQuery && matches.length > 0 ? `status-search-option-${matches[activeIndex]?.code}` : undefined}
           type="search"
           value={query}
         />
@@ -56,16 +92,14 @@ export default function StatusSearch() {
           id="status-search-results"
           role="listbox"
         >
-          {matches.length > 0 ? matches.map((status) => (
+          {matches.length > 0 ? matches.map((status, index) => (
             <Link
               className="flex items-center gap-3 rounded-xl px-3 py-2.5 transition hover:bg-[#eef5ff] focus-visible:bg-[#eef5ff] focus-visible:outline-none dark:hover:bg-[#444444] dark:focus-visible:bg-[#444444]"
+              id={`status-search-option-${status.code}`}
               key={status.code}
-              onClick={() => {
-                sessionStorage.setItem('httpmon-home-scroll-position', String(window.scrollY))
-                setQuery('')
-                setIsOpen(false)
-              }}
+              onClick={() => openStatus(status.code)}
               role="option"
+              aria-selected={index === activeIndex}
               to={`/status/${status.code}`}
             >
               <span className="w-10 shrink-0 text-sm font-black text-[#1769b0] dark:text-[#b8d9ff]">{status.code}</span>
